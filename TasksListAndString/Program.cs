@@ -13,7 +13,16 @@ namespace TasksListAndString
 
             try
             {
+                //Task "List and String"
+                //Task1
                 Console.WriteLine("Наибольшее число списка: "+ListString.Task_1(_list));
+                //Task2
+                _list.Reverse();
+                foreach (var temp in _list)
+                {
+                    Console.Write(temp + "|");
+                }
+
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}
