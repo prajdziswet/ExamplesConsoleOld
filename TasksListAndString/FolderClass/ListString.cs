@@ -54,6 +54,22 @@ namespace TasksListAndString
             }
         }
 
+        //5 Write a function that computes the running total of a list.
+        public static void Exercise_5(List<int> list)
+        {
+            int Sum = 0;
+            foreach (var temp in list)
+                Sum += temp;
+            ShowMessage(Sum, "Общая сумма - ");
+        }
+
+        //6 Write a function that tests whether a string is a palindrome.
+        public static void Exercise_6(String str)
+        {
+            var str1 = new string(str.Reverse().ToArray()).ToLower();
+            if (str1== str.ToLower()) ShowMessage(str, "Cлово/строка полиндром - ");
+            else ShowMessage(str, "Cлово/строка не полиндром - ");
+        }
     }
 
 

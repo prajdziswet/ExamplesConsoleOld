@@ -15,14 +15,15 @@ namespace TasksListAndString
             try
             {
                 ListString.ShowMessageList(_list, "Исходный список: ");
-                //Task1-3
+                //Task1-5
                 ListString.Exercise_1(_list);
                 ListString.Exercise_2(_list);
                 ListString.Exercise_3(_list,99);
                 ListString.Exercise_3(_list, 0);
-                //Task1-4
                 Linq.Exercise_4(_list);
-
+                ListString.Exercise_5(_list);
+                ListString.Exercise_6("Дом мод");
+                ListString.Exercise_6("Светило солнце");
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}
