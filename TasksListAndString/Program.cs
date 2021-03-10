@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TasksListAndString.FolderClass;
 
 namespace TasksListAndString
 {
@@ -13,12 +14,14 @@ namespace TasksListAndString
 
             try
             {
-                //Task "List and String"
+                ListString.ShowMessageList(_list, "Исходный список: ");
                 //Task1-3
                 ListString.Exercise_1(_list);
                 ListString.Exercise_2(_list);
                 ListString.Exercise_3(_list,99);
                 ListString.Exercise_3(_list, 0);
+                //Task1-4
+                Linq.Exercise_4(_list);
 
             }
             catch(Exception e)

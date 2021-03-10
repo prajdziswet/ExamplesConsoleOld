@@ -9,11 +9,11 @@ namespace TasksListAndString
     {
         #region function view
         // Show message concole
-        private static void ShowMessage<T>(T value, String first = "", String end = ".")
+        public static void ShowMessage<T>(T value, String first = "", String end = ".")
         {
             Console.WriteLine(first+value.ToString()+end);
         }
-        private static void ShowMessageList<T>(List<T> value,String First="", String end = ".", String split = "|")
+        public static void ShowMessageList<T>(List<T> value,String First="", String end = ".", String split = "|")
         {
             Console.Write(First);
             foreach (var temp in value)
@@ -39,6 +39,7 @@ namespace TasksListAndString
             {
                 temp.Reverse();
                 ShowMessageList(temp, "Реверсивный список: ");
+                temp.Reverse();
             }
         }
 
@@ -52,6 +53,7 @@ namespace TasksListAndString
                 else ShowMessage(itemcontains, "Элемент - ", " не содержиться в списке.");
             }
         }
+
     }
 
 
