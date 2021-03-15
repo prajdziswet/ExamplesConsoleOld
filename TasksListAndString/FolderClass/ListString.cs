@@ -125,7 +125,7 @@ namespace TasksListAndString
             {
              var temp=list1.Union(list2).ToList();
             temp.Sort();
-             ShowMessageList(temp, "11 Общая отсортированный список - ");
+             ShowMessageList(temp, "11 Общий отсортированный список - ");
             }
 }
 }
