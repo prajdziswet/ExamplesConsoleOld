@@ -4,3 +4,9 @@ F:\_TasksEducation\TasksListAndString\TasksListAndString\obj\Debug\TasksListAndS
 F:\_TasksEducation\TasksListAndString\TasksListAndString\obj\Debug\TasksListAndString.csproj.CoreCompileInputs.cache
 F:\_TasksEducation\TasksListAndString\TasksListAndString\obj\Debug\TasksListAndString.exe
 F:\_TasksEducation\TasksListAndString\TasksListAndString\obj\Debug\TasksListAndString.pdb
+F:\___Education\TasksListAndString\obj\Debug\TasksListAndString.csprojAssemblyReference.cache
+F:\___Education\TasksListAndString\obj\Debug\TasksListAndString.csproj.CoreCompileInputs.cache
+F:\___Education\TasksListAndString\obj\Debug\TasksListAndString.exe
+F:\___Education\TasksListAndString\obj\Debug\TasksListAndString.pdb
+F:\___Education\TasksListAndString\bin\Debug\TasksListAndString.exe
+F:\___Education\TasksListAndString\bin\Debug\TasksListAndString.pdb

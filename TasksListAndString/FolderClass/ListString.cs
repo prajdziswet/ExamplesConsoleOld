@@ -70,7 +70,31 @@ namespace TasksListAndString
             if (str1== str.ToLower()) ShowMessage(str, "Cлово/строка полиндром - ");
             else ShowMessage(str, "Cлово/строка не полиндром - ");
         }
-    }
+
+        //7 Write three functions that compute the sum of the numbers in a list: using a for-loop, a while-loop and recursion. (Subject to availability of these constructs in your language of choice.)
+         public static void Exercise_7_1(List<int> list)
+        {
+            int Sum = 0;
+            for (int i=0;i<list.Count;i++)
+                Sum += list[i];
+            ShowMessage(Sum, "Общая сумма циклом for- ");
+        }
+
+        public static void Exercise_7_2(List<int> list)
+        {
+            int Sum = 0, i=0;
+            while (i<list.Count)
+            { Sum += list[i++];}
+                
+            ShowMessage(Sum, "Общая сумма циклом while- ");
+        }
+
+        public static void Exercise_7_3(ref List<int> list, int Sum=0, int index=0)
+        {
+            if (index<list.Count) Exercise_7_3(ref list,Sum+list[index],++index);
+            else ShowMessage(Sum, "Общая сумма рекурсией- ");
+        }
 
 
+}
 }

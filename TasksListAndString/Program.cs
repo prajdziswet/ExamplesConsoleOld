@@ -24,6 +24,10 @@ namespace TasksListAndString
                 ListString.Exercise_5(_list);
                 ListString.Exercise_6("Дом мод");
                 ListString.Exercise_6("Светило солнце");
+                ListString.Exercise_7_1(_list);
+                ListString.Exercise_7_2(_list);
+                ListString.Exercise_7_3(ref _list);
+                Linq.Exercise_8(_list);
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}
