@@ -127,5 +127,21 @@ namespace TasksListAndString
             temp.Sort();
              ShowMessageList(temp, "11 Общий отсортированный список - ");
             }
+
+        //12 Write a function that rotates a list by k elements. For example [1,2,3,4,5,6] rotated by two becomes [3,4,5,6,1,2]. Try solving this without creating a copy of the list. How many swap or move operations do you need?
+            public static void Exercise_12(List<int> list1, int k)
+            {
+             int i=k;
+            if (k<=list1.Count)
+                while (i>0)
+                {
+                    int temp_int = list1[0];
+                    list1.RemoveAt(0);
+                    list1.Add(temp_int);
+                    i--;
+                }
+             ShowMessageList(list1, "12 Cписок - ");
+            }
+
 }
 }

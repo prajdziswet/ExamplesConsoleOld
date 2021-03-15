@@ -32,6 +32,7 @@ namespace TasksListAndString
                 ListString.Exercise_9(_list,_list2);
                 ListString.Exercise_10(_list,_list2);
                 ListString.Exercise_11(_list,_list2);
+                ListString.Exercise_12(_list,3);
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}
