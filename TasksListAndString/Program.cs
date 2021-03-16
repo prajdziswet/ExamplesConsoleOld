@@ -16,7 +16,7 @@ namespace TasksListAndString
             try
             {
                 ListString.ShowMessageList(_list, "Исходный список: ");
-                //Task1-5
+                //Task1-13
                 ListString.Exercise_1(_list);
                 ListString.Exercise_2(_list);
                 ListString.Exercise_3(_list,99);
@@ -34,6 +34,10 @@ namespace TasksListAndString
                 ListString.Exercise_11(_list,_list2);
                 ListString.Exercise_12(_list,3);
                 ListString.Exercise_13();
+                Console.Write("-----------Сделано 13 задач-----------\n\n");
+                 //Task14-..
+                ListString.ShowMessageList(_list, "Исходный список: ");
+                Linq.Exercise_14(3456);
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}

@@ -33,5 +33,12 @@ namespace TasksListAndString.FolderClass
             ListString.ShowMessageList(temp, "8 Простые квадраты - ");
         }
 
+                //14 Write a function that takes a number and returns a list of its digits. So for 2342 it should return [2,3,4,2].
+        public static void Exercise_14(double number)
+        {
+            List<int> list=number.ToString().ToArray().Select(x=>Char.GetNumericValue(x)).ToList();
+            ListString.ShowMessageList(list, $"14 Список из числа {number.ToString()} - ");
+        }
+
     }
 }
