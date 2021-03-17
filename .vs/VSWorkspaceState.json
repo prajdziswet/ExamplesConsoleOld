@@ -1,11 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\TasksListAndString",
-    "\\TasksListAndString\\FolderClass",
-    "\\TasksListAndString\\obj",
-    "\\TasksListAndString\\obj\\Debug"
+    "\\TasksListAndString"
   ],
-  "SelectedNode": "\\TasksListAndString\\FolderClass\\Linq.cs",
+  "SelectedNode": "\\TasksListAndString\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

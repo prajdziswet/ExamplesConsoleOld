@@ -12,7 +12,7 @@ namespace TasksListAndString
         {
             List<int> _list = new List<int>(){1,2,5,8,99,45,55,6};
             List<int> _list2 = new List<int>(){10,11};
-
+            
             try
             {
                 ListString.ShowMessageList(_list, "Исходный список: ");
