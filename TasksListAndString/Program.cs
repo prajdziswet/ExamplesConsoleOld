@@ -38,6 +38,7 @@ namespace TasksListAndString
                  //Task14-..
                 ListString.ShowMessageList(_list, "Исходный список: ");
                 Linq.Exercise_14(3456);
+                Linq.Exercise_15("1234",1234);
             }
             catch(Exception e)
             { Console.WriteLine(e.Message);}

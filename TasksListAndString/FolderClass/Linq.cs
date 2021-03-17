@@ -45,17 +45,30 @@ namespace TasksListAndString.FolderClass
         }
 
         //15 Write functions that add, subtract, and multiply two numbers in their digit-list representation (and return a new digit list). If you’re ambitious you can implement Karatsuba multiplication. Try different bases. What is the best base if you care about speed? If you couldn’t completely solve the prime number exercise above due to the lack of large numbers in your language, you can now use your own library for this task.
-        public static void Exercise_15()
+        // I am implementing long multiplication - в столбик
+        public static void Exercise_15<T1,T2>(T1 number1,T2 number2)
         {
-            List<int> x=new List<int>(){ 1,2,3,4};
-            int n='5'.CharToInt();
-            ListString.ShowMessageList(MultiplcationForEX15(x,n), $"15 Список из числа {number.ToString()} - ");
+            List<int> list1, list2, templist=new List<int>();
+            list1=number1.ToString().ToArray().Select(x=>Convert.ToInt32(x- '0')).ToList();
+            list2=number2.ToString().ToArray().Select(x=>Convert.ToInt32(x- '0')).ToList();
+            //list1.Reverse();
+            list2.Reverse();
+            int fist=0;
+            foreach (int element in list2)
+                if (fist==0) {templist=MultiplcationForEX15(list1,element);fist++;}
+                else 
+                    {
+                    var z=MultiplcationForEX15(list1,element);
+                    templist=AddListForEx15(templist,z,fist++);
+                    }
+
+            ListString.ShowMessageList(templist, $"15 Умножение списком {number1.ToString()}*{number2.ToString()}= ",".","");
         }
         //---------
-        // I am implementing long multiplication - в столбик
          private static List<int> MultiplcationForEX15(List<int> list, int number)
         {
-            var list<int> templist=new List<int>();
+            list.Reverse();
+            List<int> templist=new List<int>();
             int tempNumber=0;
             foreach (int n in list)
             {
@@ -72,9 +85,66 @@ namespace TasksListAndString.FolderClass
                 }
             }
             if (tempNumber!=0) templist.Add(tempNumber);
+            list.Reverse();
             templist.Reverse();
-            return templist;
+                return templist;
         }
+        
+        private static List<int> AddListForEx15 (List<int> list1, List<int> list2, int shift)
+        {
+            list1.Reverse();
+            list2.Reverse();
+            List<int> tempList=new List<int>();
+            int tempNumber=0,index=0,indexlist2=0;
+
+            foreach(int element in list1)
+            {
+                if (index<shift) tempList.Add(element);
+                else if (indexlist2<list2.Count)
+                    if (tempNumber+element+list2[indexlist2]<=9)
+                    {
+                        tempList.Add(tempNumber+element+list2[indexlist2++]);
+                        tempNumber=0;
+                    }
+                    else
+                    {
+                        String str=(tempNumber+element+list2[indexlist2++]).ToString();
+                        tempList.Add(str[1].CharToInt());
+                        tempNumber=str[0].CharToInt();
+                    }
+                else if (tempNumber+element<=9)
+                    {
+                        tempList.Add(tempNumber+element);
+                        tempNumber=0;
+                    }
+                    else
+                    {
+                        String str=(tempNumber+element).ToString();
+                        tempList.Add(str[1].CharToInt());
+                        tempNumber=str[0].CharToInt();
+                    }
+                index++;
+
+            } 
+            //если вышли за предел
+                if (indexlist2<list2.Count)
+                    for(int i=indexlist2;i<list2.Count;i++)
+                     if (tempNumber+list2[i]<=9)
+                         {
+                        tempList.Add(tempNumber+list2[i]);
+                        tempNumber=0;
+                         }
+                     else
+                        {
+                        String str=(tempNumber+list2[i]).ToString();
+                        tempList.Add(str[1].CharToInt());
+                            tempNumber=str[0].CharToInt();
+                        }
+                if (tempNumber!=0) tempList.Add(tempNumber);
+                tempList.Reverse();
+            return tempList;           
+        }
+        
         
         
 
