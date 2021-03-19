@@ -4,7 +4,8 @@
 # Visual Studo 2015 cache/options directory
 .vs/
 
-LINQ.Exercises/
+LINQ.Exercises/LINQ.Exercises/bin/
+LINQ.Exercises/LINQ.Exercises/obj/
 TestResults/
 TasksListAndString/bin/
 TasksListAndString/obj/
