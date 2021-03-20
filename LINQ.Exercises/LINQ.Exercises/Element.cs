@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace LINQ.Exercises
@@ -23,7 +24,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_n_less_than_0()
         {
-            int result = TestData.Numbers.First();
+            int result = TestData.Numbers.Where(x=>x<0).First();
 
             Assert.AreEqual(-3, result);
         }
@@ -31,7 +32,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_n_greater_than_0()
         {
-            int result = TestData.Numbers.Last();
+            int result = TestData.Numbers.Where(x => x > 0).Last();
 
             Assert.AreEqual(5, result);
         }
@@ -39,7 +40,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_even_n()
         {
-            int result = TestData.Numbers.First();
+            int result = TestData.Numbers.Where(x=>x%2==0).First();
 
             Assert.AreEqual(2, result);
         }
@@ -47,7 +48,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_even_n()
         {
-            int result = TestData.Numbers.Last();
+            int result = TestData.Numbers.Where(x => x % 2 == 0).Last();
 
             Assert.AreEqual(-4, result);
         }
@@ -55,7 +56,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_n_greater_than_10_if_not_found_return_0()
         {
-            int result = TestData.Numbers.First();
+            int result = TestData.Numbers.Where(x=>x>10).DefaultIfEmpty(0).First();
 
             Assert.AreEqual(0, result);
         }
@@ -63,7 +64,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_n_less_than_minus_1234_if_not_found_return_0()
         {
-            int result = TestData.Numbers.Last();
+            int result = TestData.Numbers.Where(x => x <-1234).DefaultIfEmpty(0).Last();
 
             Assert.AreEqual(0, result);
         }
@@ -71,7 +72,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_elephant()
         {
-            string result = TestData.Animals.Last();
+            string result = TestData.Animals.Last(x=>x.Contains("elephant"));
 
             Assert.AreEqual("elephant", result);
         }
@@ -79,7 +80,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_string_having_4_letters()
         {
-            string result = TestData.Animals.First();
+            string result = TestData.Animals.Where(x=>x.Count()==4).First();
 
             Assert.AreEqual("lion", result);
         }
@@ -87,7 +88,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_string_containg_g()
         {
-            string result = TestData.Animals.Last();
+            string result = TestData.Animals.Where(x=>x.Contains("g")).Last();
 
             Assert.AreEqual("penguin", result);
         }
@@ -95,7 +96,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_string_having_s_as_first_letter()
         {
-            string result = TestData.Animals.First();
+            string result = TestData.Animals.Where(x=>x.StartsWith("s")).First();
 
             Assert.AreEqual("swordfish", result);
         }
@@ -103,7 +104,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_three_letter_long_word_or_null()
         {
-            string result = TestData.Animals.Last(s => s.Length == 3);
+            string result = TestData.Animals.LastOrDefault(x=>x.Length==3);
 
             Assert.AreEqual(null, result);
         }
@@ -111,7 +112,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_person_born_after_2000()
         {
-            TestData.Person result = TestData.People.First();
+            TestData.Person result = TestData.People.FirstOrDefault(x=>x.Born.Year>2000);
 
             Assert.AreEqual(TestData.People[2], result);
         }
@@ -119,7 +120,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_person_with_lastname_ending_with_l()
         {
-            TestData.Person result = TestData.People.Last();
+            TestData.Person result = TestData.People.Last(x=>x.LastName.EndsWith("l"));
 
             Assert.AreEqual(TestData.People[2], result);
         }
@@ -127,7 +128,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_person_born_141th_day_of_year()
         {
-            TestData.Person result = TestData.People.First();
+            TestData.Person result = TestData.People.First(x=>x.Born.DayOfYear==141);
 
             Assert.AreEqual(TestData.People[2], result);
         }
@@ -135,7 +136,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_person_whose_firstname_does_not_start_with_J_or_null()
         {
-            TestData.Person result = TestData.People.Last();
+            TestData.Person result = TestData.People.LastOrDefault(x=>!x.FirstName.StartsWith("J"));
 
             Assert.AreEqual(null, result);
         }
