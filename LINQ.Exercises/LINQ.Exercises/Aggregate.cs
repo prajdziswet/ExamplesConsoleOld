@@ -24,7 +24,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Count_all_occurences_of_1()
         {
-            int result = TestData.Numbers.Where(x=>(int)x==1).Count();
+            int result = TestData.Numbers.Where(x=>x==1).Count();
 
             Assert.AreEqual(2, result);
         }
@@ -33,7 +33,7 @@ namespace LINQ.Exercises
         public void Count_all_animals_having_character_count_equal_to_5()
         {
             // Hint: use nested count
-            int result = TestData.Animals.Where(x=>x.Count()==5).Count();
+            int result = TestData.Animals.Where(x=>x.Length==5).Count();
 
             Assert.AreEqual(2, result);
         }
@@ -49,7 +49,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Sum_all_characters_in_animal_names()
         {
-            int result = TestData.Animals.Select(x=>x.Count()).Sum();
+            int result = TestData.Animals.Select(x=>x.Length).Sum();
 
             Assert.AreEqual(38, result);
         }
@@ -73,7 +73,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Find_length_of_shortest_animal_name()
         {
-            int result = TestData.Animals.Select(x=>x.Count()).Min();
+            int result = TestData.Animals.Select(x=>x.Length).Min();
 
             Assert.AreEqual(4, result);
         }
@@ -155,7 +155,8 @@ namespace LINQ.Exercises
             // else add 5 to it
             // and add resulting number to your aggregate
 
-            int result = TestData.People.Select(x => (x.Born.Day > 15) ? x.Born.Day - 10 : x.Born.Day + 5).Sum() + 256;
+            //int result = TestData.People.Select(x => (x.Born.Day > 15) ? x.Born.Day - 10 : x.Born.Day + 5).Sum() + 256;
+            int result = TestData.People.Aggregate(256,(total,x)=> (x.Born.Day > 15) ? total+x.Born.Day - 10 : total+x.Born.Day + 5);
 
             Assert.AreEqual(296, result);
         }

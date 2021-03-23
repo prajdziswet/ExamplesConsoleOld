@@ -92,7 +92,7 @@ namespace LINQ.Exercises
         {
             string[] words = { "aPPLE", "AbAcUs", "bRaNcH", "BlUeBeRrY", "ClOvEr", "cHeRry" };
 
-            var result = words.Select(x=>x).OrderBy(word=>word);
+            var result = words.OrderBy(word=>word);
 
             Assert.IsTrue(result.SequenceEqual(new string[] {
                 "AbAcUs", "aPPLE", "BlUeBeRrY", "bRaNcH", "cHeRry", "ClOvEr"
@@ -192,7 +192,7 @@ namespace LINQ.Exercises
         {
             string[] digits = { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" };
 
-            IEnumerable<string> result = digits.Where(x => x[1] == 'i').AsQueryable().Reverse().ToList();
+            IEnumerable<string> result = digits.Where(x => x[1] == 'i').Reverse();
 
             Assert.IsTrue(result.SequenceEqual(new string[] { "nine", "eight", "six", "five" }));
         }

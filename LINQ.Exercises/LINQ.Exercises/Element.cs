@@ -24,7 +24,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_n_less_than_0()
         {
-            int result = TestData.Numbers.Where(x=>x<0).First();
+            int result = TestData.Numbers.First(x=>x<0);
 
             Assert.AreEqual(-3, result);
         }
@@ -32,7 +32,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_n_greater_than_0()
         {
-            int result = TestData.Numbers.Where(x => x > 0).Last();
+            int result = TestData.Numbers.Last(x => x > 0);
 
             Assert.AreEqual(5, result);
         }
@@ -40,7 +40,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_even_n()
         {
-            int result = TestData.Numbers.Where(x=>x%2==0).First();
+            int result = TestData.Numbers.First(x=>x%2==0);
 
             Assert.AreEqual(2, result);
         }
@@ -48,7 +48,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_even_n()
         {
-            int result = TestData.Numbers.Where(x => x % 2 == 0).Last();
+            int result = TestData.Numbers.Last(x => x % 2 == 0);
 
             Assert.AreEqual(-4, result);
         }
@@ -56,7 +56,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_n_greater_than_10_if_not_found_return_0()
         {
-            int result = TestData.Numbers.Where(x=>x>10).DefaultIfEmpty(0).First();
+            int result = TestData.Numbers.DefaultIfEmpty(0).FirstOrDefault(x=>x>10);
 
             Assert.AreEqual(0, result);
         }
@@ -64,7 +64,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_n_less_than_minus_1234_if_not_found_return_0()
         {
-            int result = TestData.Numbers.Where(x => x <-1234).DefaultIfEmpty(0).Last();
+            int result = TestData.Numbers.DefaultIfEmpty(0).LastOrDefault(x => x <-1234);
 
             Assert.AreEqual(0, result);
         }
@@ -80,7 +80,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_string_having_4_letters()
         {
-            string result = TestData.Animals.Where(x=>x.Count()==4).First();
+            string result = TestData.Animals.First(x=>x.Count()==4);
 
             Assert.AreEqual("lion", result);
         }
@@ -88,7 +88,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void Last_string_containg_g()
         {
-            string result = TestData.Animals.Where(x=>x.Contains("g")).Last();
+            string result = TestData.Animals.Last(x=>x.Contains("g"));
 
             Assert.AreEqual("penguin", result);
         }
@@ -96,7 +96,7 @@ namespace LINQ.Exercises
         [TestMethod]
         public void First_string_having_s_as_first_letter()
         {
-            string result = TestData.Animals.Where(x=>x.StartsWith("s")).First();
+            string result = TestData.Animals.First(x=>x.StartsWith("s"));
 
             Assert.AreEqual("swordfish", result);
         }
