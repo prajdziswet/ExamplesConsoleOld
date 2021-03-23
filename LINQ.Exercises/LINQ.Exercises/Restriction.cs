@@ -68,7 +68,7 @@ namespace LINQ.Exercises
         public void Where_n_quare_minus_2_times_n_is_greater_than_n()
         {
             // n * n - 2 * n
-            IEnumerable<int> result = TestData.Numbers;
+            IEnumerable<int> result = TestData.Numbers.Where(n=>n*n-2*n>n);
 
             Assert.IsTrue(new[] { -3, -1, -4, -1, 5, -5 }.SequenceEqual(result));
         }
