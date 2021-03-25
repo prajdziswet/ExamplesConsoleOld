@@ -175,6 +175,37 @@ namespace TasksListAndString
             ShowMessageList(list, "Сортированный-выборкой массив: ");
         }
 
+        // Insertion sort
+        public static void Exercise_17_2(List<int> list)
+        {
+            int i = 0,i1=1;
+
+            while (i1<list.Count)
+            {
+                if (list[i1-1] >list[i1])
+                {
+                    int temp = list[i1];
+                    for (int j = i1-1; j >=0; j--)
+                    {
+                        if (list[j] >temp)
+                        {
+                            i = j; 
+                            list[j + 1] = list[j];
+
+                        }
+                        else break;
+                    }
+
+                   list[i] = temp;
+                }
+
+                i1++;
+            }
+
+            ShowMessageList(list, "Сортированный-вставкой массив: ");
+        }
+
+
         #endregion
 
 
