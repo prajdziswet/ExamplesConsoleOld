@@ -41,6 +41,9 @@ namespace TasksListAndString
                 Linq.Exercise_15("1234",1234);
                 ListString.Exercise_17_1(new List<int>(_list));
                 ListString.Exercise_17_2(new List<int>(_list));
+                ListString.Exercise_17_3(new List<int>(_list));
+                ListString.Exercise_17_4(new List<int>(_list));
+                ListString.Exercise_18(new List<int>(_list),55);
 
             }
             catch(Exception e)

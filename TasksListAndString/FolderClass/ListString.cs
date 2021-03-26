@@ -152,7 +152,7 @@ namespace TasksListAndString
         }
         #endregion
 
-        #region Exercise 14-
+        #region Exercise 17 Sort - 18
         //17 Implement the following sorting algorithms: Selection sort, Insertion sort, Merge sort, Quick sort, Stooge Sort.Check Wikipedia for descriptions.
         // Selection sort
         public static void Exercise_17_1(List<int> list)
@@ -205,6 +205,104 @@ namespace TasksListAndString
             ShowMessageList(list, "Сортированный-вставкой массив: ");
         }
 
+        //qiuq sort
+        private static void sorting(List<int> arr, int first, int last)
+        {
+            int p = arr[(last - first) / 2 + first];
+            int temp;
+            int i = first, j = last;
+            while (i <= j)
+            {
+                while (arr[i] < p && i <= last) ++i;
+                while (arr[j] > p && j >= first) --j;
+                if (i <= j)
+                {
+                    temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                    ++i; --j;
+                }
+            }
+            if (j > first) sorting(arr, first, j);
+            if (i < last) sorting(arr, i, last);
+        }
+
+        //quit sort
+        public static void Exercise_17_3(List<int> list)
+        {
+            sorting(list,0,list.Count-1);
+            ShowMessageList(list, "Сортированный-быстрой сорт массив: ");
+        }
+
+        //сортировка по частям
+        static void StoogeSort(int[] array, int startIndex, int endIndex)
+        {
+            if (array[startIndex] > array[endIndex])
+            {
+                var t = array[startIndex];
+                array[startIndex] = array[endIndex];
+                array[endIndex] = t;
+            }
+
+            if (endIndex - startIndex > 1)
+            {
+                var len = (endIndex - startIndex + 1) / 3;
+                StoogeSort(array, startIndex, endIndex - len);
+                StoogeSort(array, startIndex + len, endIndex);
+                StoogeSort(array, startIndex, endIndex - len);
+            }
+
+        }
+
+        //Stooge Sort
+        public static void Exercise_17_4(List<int> list)
+        {
+            sorting(list, 0, list.Count - 1);
+            ShowMessageList(list, "Сортированный-по частям массив: ");
+        }
+
+        //18 Implement binary search
+        //метод для рекурсивного бинарного поиска
+        static int BinarySearch(List<int> list, int searchedValue, int first, int last)
+        {
+            //границы сошлись
+            if (first > last)
+            {
+                //элемент не найден
+                return -1;
+            }
+
+            //средний индекс подмассива
+            var middle = (first + last) / 2;
+            //значение в средине подмассива
+            var middleValue = list[middle];
+
+            if (middleValue == searchedValue)
+            {
+                return middle;
+            }
+            else
+            {
+                if (middleValue > searchedValue)
+                {
+                    //рекурсивный вызов поиска для левого подмассива
+                    return BinarySearch(list, searchedValue, first, middle - 1);
+                }
+                else
+                {
+                    //рекурсивный вызов поиска для правого подмассива
+                    return BinarySearch(list, searchedValue, middle + 1, last);
+                }
+            }
+        }
+
+        public static void Exercise_18(List<int> list,int SeachNumber)
+        {
+            sorting(list, 0, list.Count - 1);
+            var temp = BinarySearch(list, SeachNumber, 0, list.Count - 1);
+            if (temp==-1) Console.WriteLine($"Item {SeachNumber} not find..");
+            else ShowMessage(temp, $"Item {SeachNumber} in position: ");
+        }
 
         #endregion
 
