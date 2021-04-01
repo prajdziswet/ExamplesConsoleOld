@@ -1,6 +1,0 @@
-F:\_TasksEducation\TasksListAndString\TextEditor\bin\Debug\TextEditor.exe
-F:\_TasksEducation\TasksListAndString\TextEditor\bin\Debug\TextEditor.pdb
-F:\_TasksEducation\TasksListAndString\TextEditor\obj\Debug\TextEditor.csprojAssemblyReference.cache
-F:\_TasksEducation\TasksListAndString\TextEditor\obj\Debug\TextEditor.csproj.CoreCompileInputs.cache
-F:\_TasksEducation\TasksListAndString\TextEditor\obj\Debug\TextEditor.exe
-F:\_TasksEducation\TasksListAndString\TextEditor\obj\Debug\TextEditor.pdb
