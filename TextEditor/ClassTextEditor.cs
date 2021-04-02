@@ -7,98 +7,111 @@
 
     namespace TextEditor
     {
-        public class Text
-        {
-            public string str;
-            public int position;
+    public class ClassTextEditor
+    {
+#region value and internal function
+        //Список записей (запись - текст с позицией курсора)
+        private List<Notation> _listNotations = new List<Notation>();
 
-            public Text(string str, int position)
+        //Номер текущей записи
+        private int _numberNotation = 0;
+        private int NumberNotation
+        {
+            get => _numberNotation;
+            set
             {
-                this.str = str;
-                this.position = position;
+                if (value <= _listNotations.Count)
+                    _numberNotation = value;
             }
+
         }
 
-        public class ClassTextEditor
-    {
-        #region value and internal function
-        public ClassTextEditor()
+        //Текущая запись (текст и курсор) с которой работаем
+        private Notation _currentNotation = new Notation("", 0);
+        public Notation CurrentNotation
+        {
+            get => _currentNotation;
+            set
             {
-            }
-
-            private List<Text> _fields=new List<Text>(){ new Text("", 0) };
-            private int _currentField = 0;
-            private int CurrentField
-            {
-                get => _currentField;
-                set
-                {
-                    if (_fields == null || _fields.Count != 0 && value > 0 && value < _fields.Count)
-                        _currentField = value;
-                }
-
-            }
-            private int _currentPosition = 0;
-            public int CurrentPosition
-            {
-                get => _currentPosition;
-                set
-                {
-                    if (_fields == null || _fields.Count != 0 && value >= 0 && value <= Fields.str.Length)
-                        _currentPosition = value;
-                }
-
-            }
-
-            public Text Fields
-            {
-                get=>_fields[_currentField];
-
-                set
-                {
-                    if (value != null)
+                    //проверяем что изменился текст а не курсор
+                    if (value.Text != _currentNotation.Text)
                     {
-                        _fields.Add(value);
-                        CurrentField++;
-                }
-                }
+                        if (NumberNotation == 0 || NumberNotation<=_listNotations.Count)
+                        {
+                            _listNotations.Add(_currentNotation);
+                            NumberNotation++;
+                        }
+                        else
+                        {
+                            _listNotations[NumberNotation - 1] = value;
+                            NumberNotation++;
+                        }
+                        //устанавливаем новое значение
+                        _currentNotation = value;
+                    }
+                    else
+                        _currentNotation.PositionCursor = value.PositionCursor;
             }
+        }
+#endregion
 
+        //INSERT {text} - appends {text} to output;
+        public void Insert(string text)
+        {
+            String newText = CurrentNotation.Text.Insert(CurrentNotation.PositionCursor, text);
+            int newPosition = CurrentNotation.PositionCursor + text.Length;
+            Notation temp = new Notation(newText, newPosition);
 
-            //INSERT {text} - appends {text} to output;
-            public void Insert(string text)
-            {
-                Text t1 = new Text("", 0);
-                t1.str = Fields.str.Insert(_currentPosition, text);
-                t1.position = _currentPosition + text.Length;
-                Fields = t1;
-                CurrentPosition = t1.position;
-            }
-            #endregion
+            CurrentNotation = temp;
+        }
+        
 
         //DELETE - deletes the last symbol from output(does nothing if output is empty);
         public void Delete()
         {
-            if (!String.IsNullOrEmpty(Fields.str))
+            if (!String.IsNullOrEmpty(CurrentNotation.Text))
             {
-                Text text=new Text("",0);
-                if (_currentPosition >= 1) text.str = Fields.str.Remove(_currentPosition - 1,1);
-                text.position = _currentPosition - 1;
-                Fields = text;
-                CurrentPosition--;
+                if (CurrentNotation.PositionCursor >= 1)
+                {
+                    String newText = CurrentNotation.Text.Remove(CurrentNotation.PositionCursor - 1, 1);
+                    int newPosition = CurrentNotation.PositionCursor - 1;
+                    Notation temp = new Notation(newText, newPosition);
+
+                    CurrentNotation = temp;
+                }
             }
         }
 
+        private bool CheckPosition(ref int startPosition, ref int finishPosition)
+        {
+            //проверка что копируемые позиции находяться на тексте, может и не надо
+            if (startPosition < 0) startPosition = 0;
+            else if (startPosition > CurrentNotation.Text.Length) startPosition = CurrentNotation.Text.Length;
+            if (finishPosition < 0) finishPosition = 0;
+            else if (finishPosition > CurrentNotation.Text.Length) finishPosition = CurrentNotation.Text.Length;
+            //проверка что позиции не равны и правильный порядок
+            if (startPosition == finishPosition) return false;
+            else if (startPosition > finishPosition) //позиции находяться в обратном порядке
+            {
+                int temp = finishPosition;
+                finishPosition = startPosition;
+                startPosition = temp;
+            }
+
+            return true;
+        }
+
         //COPY {index} - copies a substring of output starting from {index} and to the end (does nothing if {index} is out of range)
-        //I didn't copy to end
         public void Copy(int startPosition, int finishPosition)
         {
-            String newText = Fields.str.Substring(startPosition, finishPosition - startPosition);
+            if (!CheckPosition(ref startPosition, ref finishPosition)) return;
+
+            String newText = CurrentNotation.Text.Substring(startPosition, finishPosition - startPosition);
             Clipboard.Clear();
             Clipboard.SetText(newText);
         }
 
-        
+
         //PASTE - appends copied text to output (does nothing if nothing has been copied);
         public void Paste()
         {
@@ -111,9 +124,9 @@
         //UNDO - undoes one last successful operation (INSERT/DELETE/PASTE). can be called multiple times in a row to undo multiple operations.
         public void Undo()
         {
-            if (CurrentField>0)
+            if (NumberNotation > 0)
             {
-                CurrentField = CurrentField - 1;
+                _currentNotation = _listNotations[--NumberNotation];
             }
         }
     }

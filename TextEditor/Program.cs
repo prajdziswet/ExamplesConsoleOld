@@ -10,42 +10,13 @@ namespace TextEditor
     {
             static ClassTextEditor classTextEditor = new ClassTextEditor();
 
-            //bool spectrum
-            static void boolSpectrum(ref int X,int temp)
-            {
-                if (temp < 0) X = 0;
-                else if (temp > classTextEditor.Fields.str.Length) X = classTextEditor.Fields.str.Length - 1;
-                else if (temp >= 0 && temp < classTextEditor.Fields.str.Length) X = temp;
-            }
-
-            static void ChaingeSelect(ref bool select, ref int startIndex, ref int finishIndex, bool plus)
-            {
-            if (select == false)
-            {
-                select = true;
-                boolSpectrum(ref startIndex, classTextEditor.CurrentPosition);
-                if (plus) boolSpectrum(ref finishIndex, classTextEditor.CurrentPosition + 1);
-                else boolSpectrum(ref finishIndex, classTextEditor.CurrentPosition-1);
-            }
-            else
-            {
-                if (plus) boolSpectrum(ref finishIndex, finishIndex+1);
-                else boolSpectrum(ref finishIndex, finishIndex - 1);
-            }
-
-            if (startIndex == finishIndex) select = false;
-
-            }
-        
             [STAThreadAttribute]
             static void Main(string[] args)
         {
             //select
             bool sel = false;
             int startIndexSelect = -1, finishIndexSelect = -1;
-
-
-
+            
             Console.TreatControlCAsInput = true;
             Console.WriteLine("esc = exit, ctr+z = undo, ctr+left(or Right) = select, ctrl+C = Copy, ctr+V = Insert, del (or Backspace) = del");
             ConsoleKeyInfo key;
@@ -62,8 +33,7 @@ namespace TextEditor
                 //вставка ctrl+c
                 if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.C&&sel)
                 {
-                    if (startIndexSelect > finishIndexSelect) classTextEditor.Copy(finishIndexSelect, startIndexSelect);
-                    else classTextEditor.Copy( startIndexSelect, finishIndexSelect);
+                    classTextEditor.Copy( startIndexSelect, finishIndexSelect);
                     sel = false;
                     UpdateText();
                     continue;
@@ -103,14 +73,14 @@ namespace TextEditor
                 //press button left or Rigth
                 if (key.Key == ConsoleKey.LeftArrow)
                 {
-                    classTextEditor.CurrentPosition--;
-                    Console.SetCursorPosition(classTextEditor.CurrentPosition, 1);
+                    classTextEditor.CurrentNotation=new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor-1);
+                    Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
                     continue;
                 }
                 else if (key.Key == ConsoleKey.RightArrow)
                 {
-                    classTextEditor.CurrentPosition++;
-                    Console.SetCursorPosition(classTextEditor.CurrentPosition, 1);
+                    classTextEditor.CurrentNotation = new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor - 1);
+                    Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
                     continue;
                 }
 
@@ -139,8 +109,8 @@ namespace TextEditor
             Console.SetCursorPosition(0, 1);
             Console.Write(new String(' ', Console.BufferWidth));
             Console.SetCursorPosition(0, 1);
-            Console.Write(classTextEditor.Fields.str);
-            Console.SetCursorPosition(classTextEditor.CurrentPosition, 1);
+            Console.Write(classTextEditor.CurrentNotation.Text);
+            Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
             }
 
             private static void SelectText(int startIndex,int finishIndex)
@@ -153,7 +123,7 @@ namespace TextEditor
                 }
                 Console.SetCursorPosition(0, 1);
                 int index = 0;
-                foreach (var ch in classTextEditor.Fields.str)
+                foreach (var ch in classTextEditor.CurrentNotation.Text)
                 {
                     if (index >= startIndex && index < finishIndex)
                     {
@@ -169,7 +139,41 @@ namespace TextEditor
                     index++;
                     Console.Write(ch);
                 }
-            Console.SetCursorPosition(classTextEditor.CurrentPosition, 1);
+            Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
         }
+
+            //проверка, что позция выделение находиться на тексте и исправление ее 
+            static void CheckAndCorretPosition(ref int oldPositionCursor, int newPositionCursor)
+            {
+                if (oldPositionCursor < 0) newPositionCursor = 0;
+                else if (oldPositionCursor > classTextEditor.CurrentNotation.Text.Length) newPositionCursor = classTextEditor.CurrentNotation.Text.Length - 1;
+                else if (oldPositionCursor >= 0 && oldPositionCursor < classTextEditor.CurrentNotation.Text.Length) newPositionCursor = oldPositionCursor;
+            }
+
+            /// <summary>
+            /// Изменяет позчиции начала и конца выделенного текста
+            /// </summary>
+            /// <param name="select">было ли выделения</param>
+            /// <param name="startIndexSelect">позиция с которого начинается выделение</param>
+            /// <param name="finishIndexSelect">позиция с которого заканчивается выделение</param>
+            /// <param name="plus">направление вправо</param>
+            static void ChaingeSelect(ref bool select, ref int startIndexSelect, ref int finishIndexSelect, bool plus)
+            {
+                if (select == false)
+                {
+                    select = true;
+                    CheckAndCorretPosition(ref startIndexSelect, classTextEditor.CurrentNotation.PositionCursor);
+                    if (plus) CheckAndCorretPosition(ref finishIndexSelect, classTextEditor.CurrentNotation.PositionCursor + 1);
+                    else CheckAndCorretPosition(ref finishIndexSelect, classTextEditor.CurrentNotation.PositionCursor - 1);
+                }
+                else
+                {
+                    if (plus) CheckAndCorretPosition(ref finishIndexSelect, finishIndexSelect + 1);
+                    else CheckAndCorretPosition(ref finishIndexSelect, finishIndexSelect - 1);
+                }
+
+                if (startIndexSelect == finishIndexSelect) select = false;
+
+            }
     }
 }
