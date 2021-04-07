@@ -41,8 +41,6 @@
                       _currentNotation.Text = value.Text;
                       _currentNotation.PositionCursor = value.PositionCursor;
                     }
-                    else _currentNotation.PositionCursor = value.PositionCursor;
-
             }
         }
 

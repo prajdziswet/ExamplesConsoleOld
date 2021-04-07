@@ -1,12 +1,12 @@
 ﻿namespace TextEditor
 {
     //Одиночная запись, с позицией курсора - для возвращение в нужную позицию
-    public struct Notation
+    public class Notation
     {
         internal string Text;
 
         private int _positionCursor;
-        internal int PositionCursor
+        public int PositionCursor
         {
             get => _positionCursor;
             set
@@ -20,7 +20,7 @@
         /// </summary>
         /// <param name="text">Text</param>
         /// <param name="positionCursor">current position cursor</param>
-        internal Notation(string text, int positionCursor) : this()
+        internal Notation(string text, int positionCursor)
         {
             Text = text;
             PositionCursor = positionCursor;
