@@ -36,21 +36,28 @@
                     //проверяем что изменился текст а не курсор
                     if (value.Text != _currentNotation.Text)
                     {
-                        if (NumberNotation == 0 || NumberNotation<=_listNotations.Count)
-                        {
-                            _listNotations.Add(_currentNotation);
-                            NumberNotation++;
-                        }
-                        else
-                        {
-                            _listNotations[NumberNotation - 1] = value;
-                            NumberNotation++;
-                        }
-                        //устанавливаем новое значение
-                        _currentNotation = value;
+                        SaveNotation();
+                      //устанавливаем новое значение
+                      _currentNotation.Text = value.Text;
+                      _currentNotation.PositionCursor = value.PositionCursor;
                     }
-                    else
-                        _currentNotation.PositionCursor = value.PositionCursor;
+                    else _currentNotation.PositionCursor = value.PositionCursor;
+
+            }
+        }
+
+        private void SaveNotation()
+        {
+            if (NumberNotation == 0 || NumberNotation <= _listNotations.Count)
+            {
+                _listNotations.Add(_currentNotation);
+                NumberNotation++;
+            }
+            else
+            {
+                _listNotations.RemoveRange(NumberNotation - 1, _listNotations.Count- NumberNotation);
+                _listNotations.Add(_currentNotation);
+                NumberNotation++;
             }
         }
 #endregion

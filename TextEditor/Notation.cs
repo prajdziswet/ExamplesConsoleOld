@@ -25,6 +25,7 @@
             Text = text;
             PositionCursor = positionCursor;
         }
+
     }
 
 }

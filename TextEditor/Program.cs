@@ -73,13 +73,13 @@ namespace TextEditor
                 //press button left or Rigth
                 if (key.Key == ConsoleKey.LeftArrow)
                 {
-                    classTextEditor.CurrentNotation=new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor-1);
+                    classTextEditor.CurrentNotation = new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor - 1);
                     Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
                     continue;
                 }
                 else if (key.Key == ConsoleKey.RightArrow)
                 {
-                    classTextEditor.CurrentNotation = new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor - 1);
+                    classTextEditor.CurrentNotation = new Notation(classTextEditor.CurrentNotation.Text, classTextEditor.CurrentNotation.PositionCursor + 1);
                     Console.SetCursorPosition(classTextEditor.CurrentNotation.PositionCursor, 1);
                     continue;
                 }
