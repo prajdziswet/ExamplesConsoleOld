@@ -11,3 +11,6 @@ TasksListAndString/bin/
 TasksListAndString/obj/
 TextEditor/bin/
 TextEditor/obj/
+packages/
+TestEdititor.Tests/bin/
+TestEdititor.Tests/obj/
