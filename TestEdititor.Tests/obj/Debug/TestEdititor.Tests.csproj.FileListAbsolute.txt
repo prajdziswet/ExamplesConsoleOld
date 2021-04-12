@@ -1,0 +1,16 @@
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\TestEdititor.Tests.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\TestEdititor.Tests.pdb
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\TextEditor.exe
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\TextEditor.pdb
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\obj\Debug\TestEdititor.Tests.csprojAssemblyReference.cache
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\obj\Debug\TestEdititor.Tests.csproj.CoreCompileInputs.cache
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\obj\Debug\TestEdititor.Tests.csproj.CopyComplete
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\obj\Debug\TestEdititor.Tests.dll
+F:\_TasksEducation\TasksListAndString\TestEdititor.Tests\obj\Debug\TestEdititor.Tests.pdb

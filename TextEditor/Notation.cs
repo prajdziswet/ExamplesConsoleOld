@@ -1,12 +1,12 @@
 ﻿namespace TextEditor
 {
     //Одиночная запись, с позицией курсора - для возвращение в нужную позицию
-    public class Notation
+    internal class Notation
     {
         internal string Text;
 
         private int _positionCursor;
-        public int PositionCursor
+        internal int PositionCursor
         {
             get => _positionCursor;
             set

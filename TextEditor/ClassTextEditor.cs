@@ -28,7 +28,7 @@
 
         //Текущая запись (текст и курсор) с которой работаем
         private Notation _currentNotation = new Notation("", 0);
-        public Notation CurrentNotation
+        private Notation CurrentNotation
         {
             get => _currentNotation;
             set
@@ -41,7 +41,22 @@
                       _currentNotation.Text = value.Text;
                       _currentNotation.PositionCursor = value.PositionCursor;
                     }
+                    //устанавливаем длину текста
+                    SelectPositions.CurrentLengthText = value.Text.Length;
             }
+        }
+
+        //позиция курсора доступная из самого редактора
+        public int PositionCursor
+        {
+            get => _currentNotation.PositionCursor;
+            set => _currentNotation.PositionCursor = value;
+        }
+
+        //текст 
+        public string Text
+        {
+            get=>_currentNotation.Text;
         }
 
         private void SaveNotation()
@@ -87,33 +102,16 @@
             }
         }
 
-        private bool CheckPosition(ref int startPosition, ref int finishPosition)
-        {
-            //проверка что копируемые позиции находяться на тексте, может и не надо
-            if (startPosition < 0) startPosition = 0;
-            else if (startPosition > CurrentNotation.Text.Length) startPosition = CurrentNotation.Text.Length;
-            if (finishPosition < 0) finishPosition = 0;
-            else if (finishPosition > CurrentNotation.Text.Length) finishPosition = CurrentNotation.Text.Length;
-            //проверка что позиции не равны и правильный порядок
-            if (startPosition == finishPosition) return false;
-            else if (startPosition > finishPosition) //позиции находяться в обратном порядке
-            {
-                int temp = finishPosition;
-                finishPosition = startPosition;
-                startPosition = temp;
-            }
-
-            return true;
-        }
-
         //COPY {index} - copies a substring of output starting from {index} and to the end (does nothing if {index} is out of range)
-        public void Copy(int startPosition, int finishPosition)
+        public void Copy()
         {
-            if (!CheckPosition(ref startPosition, ref finishPosition)) return;
-
-            String newText = CurrentNotation.Text.Substring(startPosition, finishPosition - startPosition);
-            Clipboard.Clear();
-            Clipboard.SetText(newText);
+            if (SelectPositions.Select)
+            {
+                String newText = CurrentNotation.Text.Substring(SelectPositions.GetStartIndexSelect(), SelectPositions.GetFinishIndexSelect() - SelectPositions.GetStartIndexSelect());
+                Clipboard.Clear();
+                Clipboard.SetText(newText);
+                SelectPositions.Select = false;//сбрасываем выделение
+            }
         }
 
 

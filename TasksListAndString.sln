@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LINQ.Exercises", "LINQ.Exer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor", "TextEditor\TextEditor.csproj", "{ACB89752-7A1F-4F1D-BE16-75C366629810}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEdititor.Tests", "TestEdititor.Tests\TestEdititor.Tests.csproj", "{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{ACB89752-7A1F-4F1D-BE16-75C366629810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACB89752-7A1F-4F1D-BE16-75C366629810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACB89752-7A1F-4F1D-BE16-75C366629810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
