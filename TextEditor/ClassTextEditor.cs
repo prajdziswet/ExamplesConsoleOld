@@ -37,9 +37,8 @@
                     if (value.Text != _currentNotation.Text)
                     {
                         SaveNotation();
-                      //устанавливаем новое значение
-                      _currentNotation.Text = value.Text;
-                      _currentNotation.PositionCursor = value.PositionCursor;
+                    //устанавливаем новое значение
+                     _currentNotation = new Notation(value.Text, value.PositionCursor);
                     }
                     //устанавливаем длину текста
                     SelectPositions.CurrentLengthText = value.Text.Length;

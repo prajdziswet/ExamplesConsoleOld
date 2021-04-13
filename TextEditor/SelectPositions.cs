@@ -30,11 +30,19 @@ namespace TextEditor
         public static void SetSelectPositions(int Currentposition, bool rightButton)
         {
             int startSelect, finishSelect;
-            if (!Select) startSelect = CheckPosition(Currentposition);
-            else startSelect = startIndexSelect;
+            if (!Select)
+            {
+                startSelect = CheckPosition(Currentposition);
+                finishSelect = CheckPosition(Currentposition);
+            }
+            else
+            {
+                startSelect = startIndexSelect;
+                finishSelect = finishIndexSelect;
+            }
 
-            if (rightButton) finishSelect = CheckPosition(Currentposition + 1);
-            else finishSelect = CheckPosition(Currentposition - 1);
+            if (rightButton) finishSelect = CheckPosition(finishSelect + 1);
+            else finishSelect = CheckPosition(finishSelect - 1);
 
             if (startSelect == finishSelect) _select = false;
             else if (startIndexSelect != startSelect || finishIndexSelect != finishSelect)
