@@ -45,7 +45,7 @@ namespace TestEdititor.Tests
             ClassTextEditor classTextEditor = new ClassTextEditor();
             classTextEditor.Insert("new Text");
             for(int i=0;i<4;i++)
-            SelectPositions.SetSelectPositions(classTextEditor.PositionCursor,false);
+                classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor,false);
 
             classTextEditor.Copy();
 
@@ -75,7 +75,7 @@ namespace TestEdititor.Tests
             classTextEditor.Paste(); // Планета Земля
             //выделяем Землю
             for (int i = 0; i < 5; i++)
-                SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
+                classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
             //вносим в буфер земля
             classTextEditor.Copy();
             //устанавливаем в 0 - позиция курсора не может быть 0
@@ -96,5 +96,6 @@ namespace TestEdititor.Tests
 
             Assert.AreEqual(true, new Notation("Марс Планета Земля2", "Марс Планета Земля2".Length).Equals(new Notation(classTextEditor.Text,classTextEditor.PositionCursor)));
         }
+
     }
 }

@@ -28,7 +28,7 @@ namespace TextEditor
                 }
 
                 //вставка ctrl+c
-                if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.C&&SelectPositions.Select)
+                if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.C&& classTextEditor.SelectPositions.Select)
                 {
                     classTextEditor.Copy();
                     UpdateText();
@@ -53,16 +53,22 @@ namespace TextEditor
 
                 //press shift+left(+rigth)
                 if (key.Modifiers == ConsoleModifiers.Shift && key.Key == ConsoleKey.LeftArrow)
-                    SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
+                    classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
                 else if (key.Modifiers == ConsoleModifiers.Shift && key.Key == ConsoleKey.RightArrow)
-                    SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
+                    classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, true);
 
                 //cancel selected
-                if (key.Key == ConsoleKey.Insert) SelectPositions.Select = false;
+                if (key.Key == ConsoleKey.Insert) classTextEditor.SelectPositions.CancelSelect();
 
-                if (SelectPositions.Select)
+                if (classTextEditor.SelectPositions.Select)
                 {
                     SelectText();
+                    continue;
+                }
+                else if (key.Modifiers == ConsoleModifiers.Shift &&
+                         (key.Key == ConsoleKey.LeftArrow || key.Key == ConsoleKey.RightArrow))
+                {
+                    UpdateText();
                     continue;
                 }
 
@@ -111,7 +117,7 @@ namespace TextEditor
 
             private static void SelectText()
             {
-                int startIndex=SelectPositions.GetStartIndexSelect(),finishIndex = SelectPositions.GetFinishIndexSelect();
+                int startIndex= classTextEditor.SelectPositions.GetFistIndexSelect(),finishIndex = classTextEditor.SelectPositions.GetLastIndexSelect();
                 Console.SetCursorPosition(0, 1);
                 int index = 0;
                 foreach (var ch in classTextEditor.Text)

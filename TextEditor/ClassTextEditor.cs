@@ -10,6 +10,8 @@
     public class ClassTextEditor
     {
 #region value and internal function
+
+        public SelectPositions @SelectPositions =new SelectPositions();
         //Список записей (запись - текст с позицией курсора)
         private List<Notation> _listNotations = new List<Notation>();
 
@@ -106,10 +108,10 @@
         {
             if (SelectPositions.Select)
             {
-                String newText = CurrentNotation.Text.Substring(SelectPositions.GetStartIndexSelect(), SelectPositions.GetFinishIndexSelect() - SelectPositions.GetStartIndexSelect());
+                String newText = CurrentNotation.Text.Substring(SelectPositions.GetFistIndexSelect(), SelectPositions.GetLastIndexSelect() - SelectPositions.GetFistIndexSelect());
                 Clipboard.Clear();
                 Clipboard.SetText(newText);
-                SelectPositions.Select = false;//сбрасываем выделение
+                SelectPositions.CancelSelect();//сбрасываем выделение
             }
         }
 

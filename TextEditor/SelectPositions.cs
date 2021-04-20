@@ -4,63 +4,72 @@ using System.Security.AccessControl;
 namespace TextEditor
 {
     //the class responsible for the selected positions in the text 
-    public static class SelectPositions
+    public class SelectPositions
     {
-        private static int startIndexSelect = 0, finishIndexSelect = 0;
+        private int startIndexSelect = 0, finishIndexSelect = 0;
 
-        public static int CurrentLengthText = 0;
-
-        private static bool _select = false;
-
-        public static bool @Select
+        private int StartIndexSelect
         {
-            get=>_select;
-            set=>_select = false;// попытка присвоить скинет значение.
+            get => startIndexSelect;
+            set => startIndexSelect = CorrectPositionCursor(value);
+        }
+
+        private int FinishIndexSelect
+        {
+            get => finishIndexSelect;
+            set => finishIndexSelect = CorrectPositionCursor(value);
+        }
+
+        internal int CurrentLengthText = 0;
+
+        private bool _select = false;
+
+        public bool @Select
+        {
+            get =>_select;
+        }
+
+        public void CancelSelect()
+        {
+            startIndexSelect = 0; 
+            finishIndexSelect = 0;
+            _select = false;
         }
 
 
-        //Check position
-        static int CheckPosition(int value)
+        //checks that the cursor is in the text and return Correct position
+        int CorrectPositionCursor(int value)
         {
             if (value < 0) return 0;
             else if (value > CurrentLengthText) return CurrentLengthText;
             else return value;
         }
 
-        public static void SetSelectPositions(int Currentposition, bool rightButton)
+        public void SetSelectPositions(int currentPosition, bool rightButton)
         {
-            int startSelect, finishSelect;
             if (!Select)
             {
-                startSelect = CheckPosition(Currentposition);
-                finishSelect = CheckPosition(Currentposition);
-            }
-            else
-            {
-                startSelect = startIndexSelect;
-                finishSelect = finishIndexSelect;
-            }
-
-            if (rightButton) finishSelect = CheckPosition(finishSelect + 1);
-            else finishSelect = CheckPosition(finishSelect - 1);
-
-            if (startSelect == finishSelect) _select = false;
-            else if (startIndexSelect != startSelect || finishIndexSelect != finishSelect)
-            {
+                StartIndexSelect = currentPosition;
+                FinishIndexSelect = currentPosition;
                 _select = true;
-                startIndexSelect = startSelect;
-                finishIndexSelect = finishSelect;
             }
+
+
+            if (rightButton) FinishIndexSelect = FinishIndexSelect + 1;
+            else FinishIndexSelect = FinishIndexSelect - 1;
+
+            if (StartIndexSelect == FinishIndexSelect) CancelSelect();
+
         }
 
-        public static int GetStartIndexSelect()
+        public int GetFistIndexSelect()
         {
             if (startIndexSelect == finishIndexSelect) throw new Exception("Не реализована проверка выбраны ли символы");
             else if (startIndexSelect > finishIndexSelect) return finishIndexSelect;
             else return startIndexSelect;
         }
 
-        public static int GetFinishIndexSelect()
+        public int GetLastIndexSelect()
         {
             if (startIndexSelect == finishIndexSelect) throw new Exception("Не реализована проверка выбраны ли символы");
             else if (startIndexSelect > finishIndexSelect) return startIndexSelect;
