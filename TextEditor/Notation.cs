@@ -11,14 +11,20 @@
             get => _positionCursor;
             set
             {
-                if (0 <= value && value <= Text.Length) _positionCursor = value;
-                else if (value<0) _positionCursor = 0;
-                else if (value > Text.Length) _positionCursor = Text.Length;
+                _positionCursor = CorrectPositionCursor(value);
             }
         }
-        
+
+        //checks that the cursor is in the text and return Correct position
+        public int CorrectPositionCursor(int value)
+        {
+            if (value < 0) return 0;
+            else if (value > Text.Length) return Text.Length;
+            else return value;
+        }
+
         /// <summary>
-        /// Create struct Natation
+        /// Create class Notation
         /// </summary>
         /// <param name="text">Text</param>
         /// <param name="positionCursor">current position cursor</param>

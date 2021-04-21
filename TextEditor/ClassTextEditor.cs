@@ -42,8 +42,6 @@
                     //устанавливаем новое значение
                      _currentNotation = new Notation(value.Text, value.PositionCursor);
                     }
-                    //устанавливаем длину текста
-                    SelectPositions.CurrentLengthText = value.Text.Length;
             }
         }
 
@@ -74,10 +72,10 @@
                 NumberNotation++;
             }
         }
-#endregion
+        #endregion
 
         //INSERT {text} - appends {text} to output;
-        public void Insert(string text)
+        private void Insert(string text)
         {
             String newText = CurrentNotation.Text.Insert(CurrentNotation.PositionCursor, text);
             int newPosition = CurrentNotation.PositionCursor + text.Length;
@@ -88,7 +86,7 @@
         
 
         //DELETE - deletes the last symbol from output(does nothing if output is empty);
-        public void Delete()
+        private void Delete()
         {
             if (!String.IsNullOrEmpty(CurrentNotation.Text))
             {
@@ -104,20 +102,24 @@
         }
 
         //COPY {index} - copies a substring of output starting from {index} and to the end (does nothing if {index} is out of range)
-        public void Copy()
+        private void Copy()
         {
             if (SelectPositions.Select)
             {
                 String newText = CurrentNotation.Text.Substring(SelectPositions.GetFistIndexSelect(), SelectPositions.GetLastIndexSelect() - SelectPositions.GetFistIndexSelect());
                 Clipboard.Clear();
                 Clipboard.SetText(newText);
-                SelectPositions.CancelSelect();//сбрасываем выделение
+            }
+            else
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(CurrentNotation.Text);
             }
         }
 
 
         //PASTE - appends copied text to output (does nothing if nothing has been copied);
-        public void Paste()
+        private void Paste()
         {
             if (Clipboard.ContainsText())
             {
@@ -126,11 +128,94 @@
             }
         }
         //UNDO - undoes one last successful operation (INSERT/DELETE/PASTE). can be called multiple times in a row to undo multiple operations.
-        public void Undo()
+        private void Undo()
         {
             if (NumberNotation > 0)
             {
                 _currentNotation = _listNotations[--NumberNotation];
+            }
+        }
+
+        private void SetSelectPositions(bool rightButton=true)
+        {
+            if (!SelectPositions.Select)
+            {
+                SelectPositions.StartIndexSelect = CurrentNotation.PositionCursor;
+                SelectPositions.FinishIndexSelect = CurrentNotation.PositionCursor;
+                SelectPositions.Select = true;
+            }
+
+            if (rightButton) SelectPositions.FinishIndexSelect = CurrentNotation.CorrectPositionCursor(SelectPositions.FinishIndexSelect + 1);
+            else SelectPositions.FinishIndexSelect = CurrentNotation.CorrectPositionCursor(SelectPositions.FinishIndexSelect - 1);
+        }
+
+        //Main method, which Analisation and runs action
+        public bool Main(ConsoleKeyInfo key)
+        {
+            if (key.Key == ConsoleKey.Escape)
+            {
+                return false;
+            }
+
+            //вставка ctrl+c
+            if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.C)
+            {
+                Copy();
+                return true;
+            }
+
+            //вставка ctrl+V
+            if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.V)
+            {
+                Paste();
+                return true;
+            }
+
+            //press ctrl+z
+            if (key.Modifiers == ConsoleModifiers.Control && key.Key == ConsoleKey.Z)
+            {
+                Undo();
+                return true;
+            }
+
+            //press shift+left(+rigth)
+            if (key.Modifiers == ConsoleModifiers.Shift && key.Key == ConsoleKey.LeftArrow)
+            {
+                SetSelectPositions(false);
+                return true;
+            }
+            else if (key.Modifiers == ConsoleModifiers.Shift && key.Key == ConsoleKey.RightArrow)
+            {
+                SetSelectPositions(true);
+                return true;
+            }
+
+            SelectPositions.Select = false;
+
+            //press button left or Rigth
+            if (key.Key == ConsoleKey.LeftArrow)
+            {
+                PositionCursor--;
+                return true;
+            }
+            else if (key.Key == ConsoleKey.RightArrow)
+            {
+                PositionCursor++;
+                return true;
+            }
+
+            //press backspace or del
+            if (key.Key == ConsoleKey.Backspace | key.Key == ConsoleKey.Delete)
+            {
+                Delete();
+                return true;
+            }
+
+            if (key.KeyChar == '\u0000') return true;
+            else
+            {
+                Insert(key.KeyChar.ToString());
+                return true;
             }
         }
     }

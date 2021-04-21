@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows;
 using TextEditor;
 
@@ -7,94 +8,121 @@ namespace TestEdititor.Tests
     [TestClass]
     public class TestEdititor
     {
+        private void Insert(ClassTextEditor classTextEditor)
+        {
+            Clipboard.Clear();
+            Clipboard.SetText(" Text");
+            ConsoleKeyInfo key = new ConsoleKeyInfo('V', ConsoleKey.V, false, false, true);
+            classTextEditor.Main(key);
+        }
+
         [TestMethod]
+        //check Insert
         public void TestInsert()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
 
-            classTextEditor.Insert("12345");
+            ConsoleKeyInfo key = new ConsoleKeyInfo('T',ConsoleKey.T, false, false, false);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('e', ConsoleKey.E, false, false, false);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('x', ConsoleKey.X, false, false, false);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('t', ConsoleKey.T, false, false, false);
+            classTextEditor.Main(key);
 
-            Assert.AreEqual("12345", classTextEditor.Text);
+            Assert.AreEqual("Text", classTextEditor.Text);
         }
 
         [TestMethod]
+        //check ctrl+v or Paste
+        public void TestPaste()
+        {
+            ClassTextEditor classTextEditor = new ClassTextEditor();
+            Insert(classTextEditor);
+
+            Assert.AreEqual(" Text", classTextEditor.Text);
+        }
+
+        [TestMethod]
+        //check backspase and delete or Delete
         public void TestDelete()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
-            classTextEditor.Insert("12345");
-            classTextEditor.PositionCursor = classTextEditor.PositionCursor - 2;
-            
-            classTextEditor.Delete();
 
-            Assert.AreEqual("1245", classTextEditor.Text);
+            Insert(classTextEditor);
+            ConsoleKeyInfo key = new ConsoleKeyInfo('\0', ConsoleKey.Delete, false, false, false);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('\0', ConsoleKey.Backspace, false, false, false);
+            classTextEditor.Main(key);
+
+            Assert.AreEqual(" Te", classTextEditor.Text);
         }
 
         [TestMethod]
+        //check ctrl+Z or Undo
         public void TestUndo()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
-            classTextEditor.Insert("12345");
-            classTextEditor.Undo();
+
+            Insert(classTextEditor);
+            ConsoleKeyInfo key = new ConsoleKeyInfo('Z', ConsoleKey.Z, false, false, true);
+            classTextEditor.Main(key);
 
             Assert.AreEqual("", classTextEditor.Text);
         }
 
         [TestMethod]
+        //check ctrl+C or Copy
         public void TestCopy()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
-            classTextEditor.Insert("new Text");
-            for(int i=0;i<4;i++)
-                classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor,false);
 
-            classTextEditor.Copy();
+            Insert(classTextEditor);
+            ConsoleKeyInfo key = new ConsoleKeyInfo('C', ConsoleKey.C, false, false, true);
+            classTextEditor.Main(key);
 
-            Assert.AreEqual("Text", Clipboard.GetText());
+            Assert.AreEqual(" Text", Clipboard.GetText());
         }
 
         [TestMethod]
-        public void TestPaste()
+        //Check escape
+        public void TestEscape()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
-            classTextEditor.Insert("new");
-            Clipboard.Clear();
-            Clipboard.SetText(" Text");
+            ConsoleKeyInfo key = new ConsoleKeyInfo('\0', ConsoleKey.Escape, false, false, false);
 
-            classTextEditor.Paste();
-
-            Assert.AreEqual("new Text", classTextEditor.Text);
+            Assert.AreEqual(false, classTextEditor.Main(key));
         }
 
         [TestMethod]
-        public void TestDidFewAction()
+        //Check button left and right
+        public void TestLeftAndRight()
         {
             ClassTextEditor classTextEditor = new ClassTextEditor();
-            classTextEditor.Insert("Планета");
-            Clipboard.Clear();
-            Clipboard.SetText(" Земля");
-            classTextEditor.Paste(); // Планета Земля
-            //выделяем Землю
-            for (int i = 0; i < 5; i++)
-                classTextEditor.SelectPositions.SetSelectPositions(classTextEditor.PositionCursor, false);
-            //вносим в буфер земля
-            classTextEditor.Copy();
-            //устанавливаем в 0 - позиция курсора не может быть 0
-            classTextEditor.PositionCursor = classTextEditor.PositionCursor - 100;
-            classTextEditor.Paste(); // ЗемляПланета Земля
-            classTextEditor.Insert(" ");
-            classTextEditor.Paste(); // Земля ЗемляПланета Земля
-            //отменяем 3 действия
-            classTextEditor.Undo(); classTextEditor.Undo(); classTextEditor.Undo(); // _Планета Земля
-            //устанавливаем в 0 - позиция курсора не может быть 0
-            classTextEditor.PositionCursor = classTextEditor.PositionCursor - 100;
-            //Вставляем Марс
-            classTextEditor.Insert("Марс "); // Планета Земля
-            //устанавливаем в конец текста курсор
-            classTextEditor.PositionCursor = classTextEditor.PositionCursor + 100;
-            classTextEditor.Insert("2"); //Марс Планета Земля2_
+            Insert(classTextEditor);// " Text"
+            ConsoleKeyInfo key = new ConsoleKeyInfo('\0', ConsoleKey.LeftArrow ,false, false, false);
+            classTextEditor.Main(key);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('\0', ConsoleKey.RightArrow, false, false, false);
+            classTextEditor.Main(key);
 
+            Assert.AreEqual(4, classTextEditor.PositionCursor);
+        }
 
-            Assert.AreEqual(true, new Notation("Марс Планета Земля2", "Марс Планета Земля2".Length).Equals(new Notation(classTextEditor.Text,classTextEditor.PositionCursor)));
+        [TestMethod]
+        //Check button "Shift + left or right" or Select
+        public void TestSelect()
+        {
+            ClassTextEditor classTextEditor = new ClassTextEditor();
+            Insert(classTextEditor);// " Text"
+            ConsoleKeyInfo key = new ConsoleKeyInfo('\0', ConsoleKey.LeftArrow, true, false, false);
+            classTextEditor.Main(key);
+            classTextEditor.Main(key);
+            key = new ConsoleKeyInfo('\0', ConsoleKey.RightArrow, true, false, false);
+            classTextEditor.Main(key);
+
+            Assert.AreEqual(true, classTextEditor.SelectPositions.GetFistIndexSelect()==4&& classTextEditor.SelectPositions.GetLastIndexSelect() == 5);
         }
 
     }
