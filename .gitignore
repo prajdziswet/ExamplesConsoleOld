@@ -9,3 +9,8 @@ LINQ.Exercises/LINQ.Exercises/obj/
 TestResults/
 TasksListAndString/bin/
 TasksListAndString/obj/
+TextEditor/bin/
+TextEditor/obj/
+packages/
+TestEdititor.Tests/bin/
+TestEdititor.Tests/obj/
