@@ -8,7 +8,6 @@ namespace Library
 {
     public class Library
     {
-        public int ID;
-        public Book Book;
+
     }
 }
