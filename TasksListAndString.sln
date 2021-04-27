@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditor", "TextEditor\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEdititor.Tests", "TestEdititor.Tests\TestEdititor.Tests.csproj", "{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLibrary", "WebLibrary\WebLibrary.csproj", "{F8722FE0-95E5-4E03-8503-F33F9966AF9C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D6BC2A1-038B-43A5-B12F-5AF26FE9EF39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8722FE0-95E5-4E03-8503-F33F9966AF9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8722FE0-95E5-4E03-8503-F33F9966AF9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8722FE0-95E5-4E03-8503-F33F9966AF9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8722FE0-95E5-4E03-8503-F33F9966AF9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
