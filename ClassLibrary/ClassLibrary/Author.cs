@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Library
+namespace ClassLibrary
 {
     public class Author
     {
