@@ -5,8 +5,8 @@ namespace ClassLibrary
 {
     public class CardReader
     {
-        public int NumberCard;
+        public int ID;
         public Reader Reader;
-        public IEnumerable<int> ISBNs;
+        public IEnumerable<Book> Books;
     }
 }

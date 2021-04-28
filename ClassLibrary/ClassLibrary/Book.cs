@@ -4,7 +4,7 @@ namespace ClassLibrary
 {
     public class Book
     {
-        public int ISBN;
+        public String ISBN;
         public String NameBook;
         public Author AuthorBook;
     }
