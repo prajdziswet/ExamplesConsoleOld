@@ -17,3 +17,5 @@ TestEdititor.Tests/obj/
 ClassLibrary/ClassLibrary/bin/
 ClassLibrary/ClassLibrary/obj/
 ClassLibrary/.vs/
+ClassLibrary/ClassLibrary.Test/bin/
+ClassLibrary/ClassLibrary.Test/obj/
