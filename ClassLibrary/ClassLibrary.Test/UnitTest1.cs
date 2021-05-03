@@ -6,10 +6,17 @@ namespace ClassLibrary.Test
     public class UnitTest1
     {
         [Test]
-        public void TestMethod1()
+        public void TestBooksExist()
         {
             Library l = new Library();
-            Assert.AreEqual(null, l.AllBooks);
+            Assert.AreEqual(true, l.Books!=null);
+        }
+
+        [Test]
+        public void TestBooks()
+        {
+            Library l = new Library();
+            Assert.AreEqual(true, l.Books?.Count>=0);
         }
     }
 }
