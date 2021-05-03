@@ -18,5 +18,19 @@ namespace ClassLibrary.Test
             Library l = new Library();
             Assert.AreEqual(true, l.Books?.Count>=0);
         }
+
+        [Test]
+        public void TestAuthorExist()
+        {
+            Library l = new Library();
+            Assert.AreEqual(true, l.Authors != null);
+        }
+
+        [Test]
+        public void TestAuthors()
+        {
+            Library l = new Library();
+            Assert.AreEqual(true, l.Authors?.Count >= 0);
+        }
     }
 }
