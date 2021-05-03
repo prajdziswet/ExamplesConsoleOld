@@ -19,3 +19,6 @@ ClassLibrary/ClassLibrary/obj/
 ClassLibrary/.vs/
 ClassLibrary/ClassLibrary.Test/bin/
 ClassLibrary/ClassLibrary.Test/obj/
+TodoApi/.vs/
+TodoApi/TodoApi/bin/
+TodoApi/TodoApi/obj/
