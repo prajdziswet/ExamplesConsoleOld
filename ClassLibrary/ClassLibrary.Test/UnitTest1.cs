@@ -5,30 +5,31 @@ namespace ClassLibrary.Test
     [TestFixture]
     public class UnitTest1
     {
-        Library lib = new Library();
-
         [Test]
-        public void TestBooksExist()
+        public void ListBooksExist()
         {
-            
+            Library lib = new Library();
             Assert.AreEqual(true, lib.Books!=null);
         }
 
         [Test]
-        public void TestBooks()
+        public void ListIsNoBooks()
         {
+            Library lib = new Library();
             Assert.AreEqual(true, lib.Books?.Count==0);
         }
 
         [Test]
-        public void TestAuthorExist()
+        public void ListAuthorsExist()
         {
+            Library lib = new Library();
             Assert.AreEqual(true, lib.Authors != null);
         }
 
         [Test]
-        public void TestAuthors()
+        public void ListIsNoAuthors()
         {
+            Library lib = new Library();
             Assert.AreEqual(true, lib.Authors?.Count == 0);
         }
     }

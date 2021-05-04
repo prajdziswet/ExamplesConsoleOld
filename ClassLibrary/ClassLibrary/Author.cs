@@ -7,10 +7,15 @@ namespace ClassLibrary
         public int ID;
         public String Name;
         public String LastName;
-
-        public Author(String name, String lastName, int countAuthors)
+        public static int Count
         {
-            ID = ++countAuthors;
+            get;
+            private set;
+        }
+
+        public Author(String name, String lastName)
+        {
+            ID = ++Count;
             Name = name;
             LastName = lastName;
         }
