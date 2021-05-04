@@ -16,7 +16,7 @@ namespace ClassLibrary.Test
         public void ListIsNoBooks()
         {
             Library lib = new Library();
-            Assert.AreEqual(true, lib.Books?.Count==0);
+            Assert.AreEqual(0, lib.Books?.Count);
         }
 
         [Test]
@@ -30,7 +30,17 @@ namespace ClassLibrary.Test
         public void ListIsNoAuthors()
         {
             Library lib = new Library();
-            Assert.AreEqual(true, lib.Authors?.Count == 0);
+            Assert.AreEqual(0, lib.Authors?.Count);
         }
+
+        [Test]
+        public void AddNewAuthor()
+        {
+            Library lib = new Library();
+            lib.AddAuthor("Лев", "Толстой");
+            //как проще реализовывать проверку, составных объектов?
+            Assert.AreEqual(true, lib.Authors[0].Name=="Лев"&&lib.Authors[0].LastName =="Толстой");
+        }
+
     }
 }
