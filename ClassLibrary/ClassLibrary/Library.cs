@@ -10,12 +10,6 @@ namespace ClassLibrary
 
         public List<Author> Authors = new List<Author>();
 
-        //букк пока не смотри
-        public void AddBook(String ISBN, String NameBook,String FullNameAuthor)
-        {
-            Book newBook = new Book();
-        }
-
         public Author AddAuthor(String nameAuthor,String lastNameAuthor)
         {
             if (nameAuthor.IsNullOrWhiteSpace() || lastNameAuthor.IsNullOrWhiteSpace())
