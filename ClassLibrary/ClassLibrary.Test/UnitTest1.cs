@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassLibrary.Test
 {
@@ -40,8 +42,8 @@ namespace ClassLibrary.Test
         public void AddNewAuthor()
         {
             Library lib = new Library();
-            lib.AddAuthor("Лев", "Толстой");
-            Assert.AreEqual(true, lib.Authors[0].Name=="Лев"&&lib.Authors[0].LastName =="Толстой");
+            lib.AddAuthor("Lev", "Tolstoj");
+            Assert.AreEqual(true, lib.Authors[0].Name== "Lev" && lib.Authors[0].LastName == "Tolstoj");
         }
 
         [Test]
@@ -51,9 +53,9 @@ namespace ClassLibrary.Test
             bool checkFlag = false;
             try
             { 
-            lib.AddAuthor("", "Толстой");
+            lib.AddAuthor("", "Tolstoj");
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 checkFlag = true;
             }
@@ -67,9 +69,9 @@ namespace ClassLibrary.Test
             bool checkFlag = false;
             try
             {
-                lib.AddAuthor("Лев", null);
+                lib.AddAuthor("Lev", null);
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 checkFlag = true;
             }
@@ -80,18 +82,21 @@ namespace ClassLibrary.Test
         public void AddNewAuthors()
         {
             Library lib = new Library();
-            lib.AddAuthor("Лев", "Толстой");
-            lib.AddAuthor("Александр", "Пушкин"); 
-            lib.AddAuthor("Антон", "Чехов");
-            Assert.AreEqual(true, lib.Authors[1].Name == "Александр" && lib.Authors[1].LastName == "Пушкин"&&lib.Authors.Count==3) ;
+            lib.AddAuthor("Lev", "Tolstoj");
+            lib.AddAuthor("Alexsandr", "Puskin"); 
+            lib.AddAuthor("Anton", "Chehov");
+
+            List<String> result = new List<String>();
+            lib.Authors.ForEach(x => { result.Add(x.Name); result.Add(x.LastName); }) ;
+            Assert.IsTrue(result.ToArray().SequenceEqual(new[] { "Lev", "Tolstoj", "Alexsandr", "Puskin", "Anton", "Chehov" })) ;
         }
 
         [Test]
         public void AddSimularAuthors()
         {
             Library lib = new Library();
-            lib.AddAuthor("Лев", "Толстой");
-            lib.AddAuthor("Лев", "Толстой");
+            lib.AddAuthor("Lev", "Tolstoj");
+            lib.AddAuthor("Lev", "Tolstoj");
             Assert.AreEqual(true, lib.Authors.Count == 1);
         }
 
@@ -99,10 +104,13 @@ namespace ClassLibrary.Test
         public void AddSimularNameOrLastNameAuthors()
         {
             Library lib = new Library();
-            lib.AddAuthor("Лев", "Толстой");
-            lib.AddAuthor("Александр", "Толстой");
-            lib.AddAuthor("Александр", "Пушкин");
-            Assert.AreEqual(true, lib.Authors.Count == 3&& lib.Authors[1].Name == "Александр" && lib.Authors[1].LastName == "Толстой");
+            lib.AddAuthor("Lev", "Tolstoj");
+            lib.AddAuthor("Alexsandr", "Tolstoj");
+            lib.AddAuthor("Alexsandr", "Puskin");
+
+            List<String> result = new List<String>();
+            lib.Authors.ForEach(x => { result.Add(x.Name); result.Add(x.LastName); });
+            Assert.IsTrue(result.ToArray().SequenceEqual(new[] { "Lev", "Tolstoj", "Alexsandr", "Tolstoj" , "Alexsandr", "Puskin" }));
         }
         #endregion
     }
