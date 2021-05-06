@@ -86,9 +86,12 @@ namespace ClassLibrary.Test
             lib.AddAuthor("Alexsandr", "Puskin"); 
             lib.AddAuthor("Anton", "Chehov");
 
-            List<String> result = new List<String>();
-            lib.Authors.ForEach(x => { result.Add(x.Name); result.Add(x.LastName); }) ;
-            Assert.IsTrue(result.ToArray().SequenceEqual(new[] { "Lev", "Tolstoj", "Alexsandr", "Puskin", "Anton", "Chehov" })) ;
+            Assert.IsTrue(lib.Authors[0].Name == "Lev");
+            Assert.IsTrue(lib.Authors[0].LastName == "Tolstoj");
+            Assert.IsTrue(lib.Authors[1].Name == "Alexsandr");
+            Assert.IsTrue(lib.Authors[1].LastName == "Puskin");
+            Assert.IsTrue(lib.Authors[2].Name == "Anton");
+            Assert.IsTrue(lib.Authors[2].LastName == "Chehov");
         }
 
         [Test]
@@ -108,10 +111,26 @@ namespace ClassLibrary.Test
             lib.AddAuthor("Alexsandr", "Tolstoj");
             lib.AddAuthor("Alexsandr", "Puskin");
 
-            List<String> result = new List<String>();
-            lib.Authors.ForEach(x => { result.Add(x.Name); result.Add(x.LastName); });
-            Assert.IsTrue(result.ToArray().SequenceEqual(new[] { "Lev", "Tolstoj", "Alexsandr", "Tolstoj" , "Alexsandr", "Puskin" }));
+            Assert.IsTrue(lib.Authors[0].Name == "Lev");
+            Assert.IsTrue(lib.Authors[0].LastName == "Tolstoj");
+            Assert.IsTrue(lib.Authors[1].Name == "Alexsandr");
+            Assert.IsTrue(lib.Authors[1].LastName == "Tolstoj");
+            Assert.IsTrue(lib.Authors[2].Name == "Alexsandr");
+            Assert.IsTrue(lib.Authors[2].LastName == "Puskin");
         }
         #endregion
+
+        [Test]
+        public void CheckDifferentID()
+        {
+            Library lib = new Library();
+            lib.AddAuthor("Lev", "Tolstoj");
+            lib.AddAuthor("Alexsandr", "Tolstoj");
+            lib.AddAuthor("Alexsandr", "Puskin");
+
+            Assert.IsTrue(lib.Authors[0].ID != lib.Authors[1].ID);
+            Assert.IsTrue(lib.Authors[0].ID != lib.Authors[2].ID);
+            Assert.IsTrue(lib.Authors[1].ID != lib.Authors[2].ID);
+        }
     }
 }
