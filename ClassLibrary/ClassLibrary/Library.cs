@@ -8,6 +8,27 @@ namespace ClassLibrary
     {
         public List<Book> Books= new List<Book>();
 
+        public Book AddBook(String ISBN, String nameBook,Author author)
+        {
+            if (ISBN.IsNullOrWhiteSpace() || nameBook.IsNullOrWhiteSpace() || author == null)
+            {
+                throw new NullReferenceException("Одно из полей книги пусто");
+            }
+
+            Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
+
+            if (returnBook != null)
+            {
+                throw new ArgumentException("Данная книга существует");
+            }
+            else
+            {
+                returnBook = new Book(ISBN, nameBook, author);
+                Books.Add(returnBook);
+                return returnBook;
+            }
+        }
+
         public List<Author> Authors = new List<Author>();
 
         public Author AddAuthor(String nameAuthor,String lastNameAuthor)
