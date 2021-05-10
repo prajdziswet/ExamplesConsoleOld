@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Shouldly;
 
 namespace ClassLibrary.Test
 {
@@ -29,136 +30,57 @@ namespace ClassLibrary.Test
 
             Assert.IsTrue(lib.Books[0].ISBN== "226611156");
             Assert.IsTrue(lib.Books[0].NameBook == "War and Peace");
-            Assert.IsTrue(lib.Books[0].AuthorBook == lib.AddAuthor("Lev", "Tolstoj"));
+            Assert.IsTrue(lib.Books[0].AuthorBook == author);
         }
 
         [Test]
         public void AddIncorrectNameBook_Empty()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
-                lib.AddBook("226611156", "", author);
-            }
-            catch (NullReferenceException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-            
 
-            Assert.IsTrue(check);
+            Should.Throw<ArgumentNullException>(() => lib.AddBook("226611156", "", author));
         }
 
         [Test]
         public void AddIncorrectNameBook_Null()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
-                lib.AddBook("226611156", null, author);
-            }
-            catch (NullReferenceException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-
-
-            Assert.IsTrue(check);
+                Should.Throw<ArgumentNullException>(() => lib.AddBook("226611156", null, author));
         }
 
         [Test]
         public void AddIncorrectISBN_Emty()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
-                lib.AddBook("", "War and Peace", author);
-            }
-            catch (NullReferenceException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-
-            Assert.IsTrue(check);
+                Should.Throw<ArgumentNullException>(() => lib.AddBook("", "War and Peace", author));
         }
 
         [Test]
         public void AddIncorrectISBN_Null()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
-                lib.AddBook(null, "War and Peace", author);
-            }
-            catch (NullReferenceException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-            
-            Assert.IsTrue(check);
+                Should.Throw<ArgumentNullException>(() => lib.AddBook(null, "War and Peace", author));
         }
 
         [Test]
         public void AddIncorrectISBN_NotUnique()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
                 lib.AddBook("226611156", "War and Peace", author);
-                lib.AddBook("226611156", "Mu-Mu", author);
-            }
-            catch (ArgumentException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-
-            Assert.IsTrue(check);
+                Should.Throw<ArgumentException>(() => lib.AddBook("226611156", "Mu-Mu", author));
         }
 
         [Test]
         public void AddIncorrectAuthor_Null()
         {
-            bool check = false;
-            try
-            {
                 Library lib = new Library();
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
-                lib.AddBook("226611156", "War and Peace", null);
-            }
-            catch (NullReferenceException)
-            {
-                check = true;
-            }
-            catch (Exception)
-            {
-            }
-
-            Assert.IsTrue(check);
-        }
+                Should.Throw<ArgumentException>(() => lib.AddBook("226611156", "War and Peace", null));
+         }
     }
 }

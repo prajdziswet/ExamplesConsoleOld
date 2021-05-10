@@ -8,24 +8,23 @@ namespace ClassLibrary
     {
         public List<Book> Books= new List<Book>();
 
-        public Book AddBook(String ISBN, String nameBook,Author author)
+        public void AddBook(String ISBN, String nameBook,Author author)
         {
             if (ISBN.IsNullOrWhiteSpace() || nameBook.IsNullOrWhiteSpace() || author == null)
             {
-                throw new NullReferenceException("Одно из полей книги пусто");
+                throw new ArgumentNullException("One of the fields of the book is empty");
             }
 
             Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
 
             if (returnBook != null)
             {
-                throw new ArgumentException("Данная книга существует");
+                throw new ArgumentException("This book does not exist ");
             }
             else
             {
                 returnBook = new Book(ISBN, nameBook, author);
                 Books.Add(returnBook);
-                return returnBook;
             }
         }
 
@@ -35,7 +34,7 @@ namespace ClassLibrary
         {
             if (nameAuthor.IsNullOrWhiteSpace() || lastNameAuthor.IsNullOrWhiteSpace())
             {
-                throw new NullReferenceException("Имя или фамилии автора пусто");
+                throw new NullReferenceException("The author's first or last name is empty ");
             }
 
             Author returnAuthor = Authors?.FirstOrDefault(author =>
