@@ -6,21 +6,8 @@ using System.Linq;
 namespace ClassLibrary.Test
 {
     [TestFixture]
-    public class UnitTest1
+    public class TestAuthors
     {
-        [Test]
-        public void ListBooksExist()
-        {
-            Library lib = new Library();
-            Assert.AreEqual(true, lib.Books!=null);
-        }
-
-        [Test]
-        public void ListIsNoBooks()
-        {
-            Library lib = new Library();
-            Assert.AreEqual(0, lib.Books?.Count);
-        }
 
         [Test]
         public void ListAuthorsExist()
