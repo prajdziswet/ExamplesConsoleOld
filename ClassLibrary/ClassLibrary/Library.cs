@@ -25,7 +25,7 @@ namespace ClassLibrary
 
             if (returnBook != null|| authorInAuthors==null)
             {
-                throw new ArgumentException("This book or author doesn't exist");
+                throw new ArgumentException("This book's ISBN exists or author doesn't exist");
             }
             else
             {
