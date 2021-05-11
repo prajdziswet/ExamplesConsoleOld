@@ -6,7 +6,12 @@ namespace ClassLibrary
 {
     public class Library
     {
-        public List<Book> Books= new List<Book>();
+        public List<Book> Books
+        {
+            get;
+            private set;
+        } 
+            = new List<Book>();
 
         public void AddBook(String ISBN, String nameBook,Author author)
         {
@@ -16,10 +21,11 @@ namespace ClassLibrary
             }
 
             Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
+            Author authorInAuthors = Authors?.FirstOrDefault(x=>x.ID==author.ID);
 
-            if (returnBook != null)
+            if (returnBook != null&& authorInAuthors==null)
             {
-                throw new ArgumentException("This book does not exist ");
+                throw new ArgumentException("This book or author doesn't exist");
             }
             else
             {
@@ -28,7 +34,12 @@ namespace ClassLibrary
             }
         }
 
-        public List<Author> Authors = new List<Author>();
+        public List<Author> Authors
+        {
+            get;
+            private set;
+        } 
+            = new List<Author>();
 
         public Author AddAuthor(String nameAuthor,String lastNameAuthor)
         {

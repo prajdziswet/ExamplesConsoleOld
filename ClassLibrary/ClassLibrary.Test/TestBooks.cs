@@ -82,5 +82,13 @@ namespace ClassLibrary.Test
                 Author author = lib.AddAuthor("Lev", "Tolstoj");
                 Should.Throw<ArgumentException>(() => lib.AddBook("226611156", "War and Peace", null));
          }
+
+        [Test]
+        public void AthorNotExistInList()
+        {
+            Library lib = new Library();
+            Author author = new Author("Lev", "Tolstoj");
+            Should.Throw<ArgumentException>(() => lib.AddBook("226611156", "War and Peace", null));
+        }
     }
 }
