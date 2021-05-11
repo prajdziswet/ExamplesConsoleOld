@@ -10,10 +10,10 @@ namespace ClassLibrary
         {
             get;
             private set;
-        } 
+        }
             = new List<Book>();
 
-        public void AddBook(String ISBN, String nameBook,Author author)
+        public void AddBook(String ISBN, String nameBook, Author author)
         {
             if (ISBN.IsNullOrWhiteSpace() || nameBook.IsNullOrWhiteSpace() || author == null)
             {
@@ -21,9 +21,9 @@ namespace ClassLibrary
             }
 
             Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
-            Author authorInAuthors = Authors?.FirstOrDefault(x=>x.ID==author.ID);
+            Author authorInAuthors = Authors?.FirstOrDefault(x => x.ID == author.ID);
 
-            if (returnBook != null&& authorInAuthors==null)
+            if (returnBook != null|| authorInAuthors==null)
             {
                 throw new ArgumentException("This book or author doesn't exist");
             }
