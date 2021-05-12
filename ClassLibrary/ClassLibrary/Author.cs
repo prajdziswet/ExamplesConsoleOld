@@ -29,6 +29,11 @@ namespace ClassLibrary
 
         public Author(String name, String lastName)
         {
+            if (name.IsNullOrWhiteSpace() || lastName.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException("The author's first or last name is empty ");
+            }
+
             ID = ++Count;
             Name = name;
             LastName = lastName;

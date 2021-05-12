@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ClassLibrary
 {
@@ -10,44 +11,60 @@ namespace ClassLibrary
             get;
             private set;
         }
-        public Reader Reader
+        public String Name
         {
             get;
             private set;
         }
+        public String LastName
+        {
+            get;
+            private set;
+        }
+
         public List<Book> Books
         {
             get;
             private set;
-        }
+        } = new List<Book>();
+
         public static int Count
         {
             get;
             private set;
         }
 
-        public CardReader(Reader reader)
+        public CardReader(String NameReader, String LastNameReader)
         {
-            //could better check here or all the same Library??
-            if (reader == null)
+
+            if (NameReader.IsNullOrWhiteSpace())
             {
-                throw new NullReferenceException("Readers reference is Null");
+                throw new ArgumentNullException("Name is empty");
+            }
+            else if (LastNameReader.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException("Name is empty");
             }
 
-            ID = ++Count;
-            Reader = reader;
+            ID=++Count;
+            this.Name = NameReader;
+            this.LastName = LastNameReader;
         }
 
-        public void AddBookInCardReader(Book book)
+        public void WriteBookInCard(Book book)
         {
             if (book == null)
             {
                 throw new NullReferenceException("Book's reference is Null (received in AddBookInCardReader)");
             }
-            else if (book.AuthorBook == null || book.ISBN.IsNullOrWhiteSpace() || book.NameBook.IsNullOrWhiteSpace())
+
+            var findBook = Books.FirstOrDefault(x => x.ISBN==book.ISBN);
+            if (findBook != null)
             {
-                throw new ArgumentNullException("AddBookInCardReader received incorrect arguments");
+                throw new ArgumentException("you have already taken this book");
             }
+
+
         }
     }
 }

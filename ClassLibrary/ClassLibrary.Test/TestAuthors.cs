@@ -1,7 +1,6 @@
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using Shouldly;
 
 namespace ClassLibrary.Test
 {
@@ -37,32 +36,14 @@ namespace ClassLibrary.Test
         public void AddEmptyAuthor()
         {
             Library lib = new Library();
-            bool checkFlag = false;
-            try
-            { 
-            lib.AddAuthor("", "Tolstoj");
-            }
-            catch (NullReferenceException)
-            {
-                checkFlag = true;
-            }
-            Assert.AreEqual(true, checkFlag);
+            Should.Throw<ArgumentNullException>(() => lib.AddAuthor("", "Tolstoj"));
         }
 
         [Test]
         public void AddNullAuthor()
         {
             Library lib = new Library();
-            bool checkFlag = false;
-            try
-            {
-                lib.AddAuthor("Lev", null);
-            }
-            catch (NullReferenceException)
-            {
-                checkFlag = true;
-            }
-            Assert.AreEqual(true, checkFlag);
+            Should.Throw<ArgumentNullException>(() => lib.AddAuthor("Lev", null));
         }
 
         [Test]

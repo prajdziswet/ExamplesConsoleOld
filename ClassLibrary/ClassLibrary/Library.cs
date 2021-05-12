@@ -15,17 +15,16 @@ namespace ClassLibrary
 
         public void AddBook(String ISBN, String nameBook, Author author)
         {
-            if (ISBN.IsNullOrWhiteSpace() || nameBook.IsNullOrWhiteSpace() || author == null)
-            {
-                throw new ArgumentNullException("One of the fields of the book is empty");
-            }
-
             Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
-            Author authorInAuthors = Authors?.FirstOrDefault(x => x.ID == author.ID);
+            Author authorInAuthors = Authors?.FirstOrDefault(x => x.ID == author?.ID);
 
-            if (returnBook != null|| authorInAuthors==null)
+            if (returnBook != null)
             {
-                throw new ArgumentException("This book's ISBN exists or author doesn't exist");
+                throw new ArgumentException("This book's ISBN exists");
+            }
+            else if (authorInAuthors == null)
+            {
+                throw new ArgumentException("This author doesn't exist");
             }
             else
             {
@@ -43,11 +42,6 @@ namespace ClassLibrary
 
         public Author AddAuthor(String nameAuthor,String lastNameAuthor)
         {
-            if (nameAuthor.IsNullOrWhiteSpace() || lastNameAuthor.IsNullOrWhiteSpace())
-            {
-                throw new NullReferenceException("The author's first or last name is empty ");
-            }
-
             Author returnAuthor = Authors?.FirstOrDefault(author =>
                 author.Name == nameAuthor && author.LastName == lastNameAuthor);
 
@@ -58,6 +52,27 @@ namespace ClassLibrary
             }
 
             return returnAuthor;
+        }
+
+        public List<CardReader> CardReaders
+        {
+            get;
+            private set;
+        }
+            = new List<CardReader>();
+
+        //I'm breaking the rule AV1115, but "AddAuthor" breaking the rule too
+        public CardReader GetCardForReader(String NameReader,String LastNameReader)
+        {
+            CardReader cardReader =
+                CardReaders.FirstOrDefault(card => card.Name == NameReader && card.LastName == LastNameReader);
+            if (cardReader == null)
+            {
+                cardReader=new CardReader(NameReader, LastNameReader);
+                CardReaders.Add(cardReader);
+            }
+
+            return cardReader;
         }
 
 
