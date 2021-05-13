@@ -88,7 +88,7 @@ namespace ClassLibrary
             }
             else
             {
-                throw new ArgumentException("This author exists in List");
+                throw new ArgumentException("This reader exists in List");
             }
         }
 
