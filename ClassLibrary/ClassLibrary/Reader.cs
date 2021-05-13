@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ClassLibrary
 {
-    public class CardReader
+    public class Reader
     {
         public int ID
         {
@@ -34,7 +34,7 @@ namespace ClassLibrary
             private set;
         }
 
-        public CardReader(String NameReader, String LastNameReader)
+        public Reader(String NameReader, String LastNameReader)
         {
 
             if (NameReader.IsNullOrWhiteSpace())
@@ -43,7 +43,7 @@ namespace ClassLibrary
             }
             else if (LastNameReader.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("Name is empty");
+                throw new ArgumentNullException("LastName is empty");
             }
 
             ID=++Count;

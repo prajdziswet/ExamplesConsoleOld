@@ -13,23 +13,28 @@ namespace ClassLibrary
         }
             = new List<Book>();
 
-        public void AddBook(String ISBN, String nameBook, Author author)
+        public void AddBookInLibrary(Book book)
         {
-            Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
-            Author authorInAuthors = Authors?.FirstOrDefault(x => x.ID == author?.ID);
+            if (book == null)
+            {
+                throw new NullReferenceException("Book's reference is null");
+            }
+            
+            Author returnAuthor = Authors?.FirstOrDefault(x =>
+                x.ID == book.AuthorBook.ID);
+            if (returnAuthor == null)
+            {
+                throw new ArgumentException("This author doesn't exist in list");
+            }
 
+            Book returnBook = Books?.FirstOrDefault(x => x.ISBN ==book.ISBN);
             if (returnBook != null)
             {
                 throw new ArgumentException("This book's ISBN exists");
             }
-            else if (authorInAuthors == null)
-            {
-                throw new ArgumentException("This author doesn't exist");
-            }
             else
             {
-                returnBook = new Book(ISBN, nameBook, author);
-                Books.Add(returnBook);
+                Books.Add(book);
             }
         }
 
@@ -40,39 +45,51 @@ namespace ClassLibrary
         } 
             = new List<Author>();
 
-        public Author AddAuthor(String nameAuthor,String lastNameAuthor)
+        public void AddAuthorInList(Author author)
         {
-            Author returnAuthor = Authors?.FirstOrDefault(author =>
-                author.Name == nameAuthor && author.LastName == lastNameAuthor);
+            if (author == null)
+            {
+                throw new NullReferenceException("Author's reference is null");
+            }
+
+            Author returnAuthor = Authors?.FirstOrDefault(x =>
+                x.ID == author.ID);
 
             if (returnAuthor == null)
             {
-                returnAuthor = new Author(nameAuthor, lastNameAuthor);
-                Authors.Add(returnAuthor);
+                Authors.Add(author);
             }
-
-            return returnAuthor;
+            else
+            {
+                throw new ArgumentException("This author exists in List");
+            }
         }
 
-        public List<CardReader> CardReaders
+        public List<Reader> Readers
         {
             get;
             private set;
         }
-            = new List<CardReader>();
+            = new List<Reader>();
 
-        //I'm breaking the rule AV1115, but "AddAuthor" breaking the rule too
-        public CardReader GetCardForReader(String NameReader,String LastNameReader)
+
+        public void AddReader(Reader reader)
         {
-            CardReader cardReader =
-                CardReaders.FirstOrDefault(card => card.Name == NameReader && card.LastName == LastNameReader);
-            if (cardReader == null)
+            if (reader == null)
             {
-                cardReader=new CardReader(NameReader, LastNameReader);
-                CardReaders.Add(cardReader);
+                throw new NullReferenceException("Reader reference is null");
             }
+            Reader returnReader =
+                Readers.FirstOrDefault(card => card.ID==reader.ID);
 
-            return cardReader;
+            if (returnReader == null)
+            {
+                Readers.Add(reader);
+            }
+            else
+            {
+                throw new ArgumentException("This author exists in List");
+            }
         }
 
 

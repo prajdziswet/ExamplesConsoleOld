@@ -25,10 +25,11 @@ namespace ClassLibrary.Test
         #region AddAuthor
 
         [Test]
-        public void AddNewAuthor()
+        public void AddNewAuthorInList()
         {
             Library lib = new Library();
-            lib.AddAuthor("Lev", "Tolstoj");
+            Author author = new Author("Lev", "Tolstoj");
+            lib.AddAuthorInList(author);
             Assert.AreEqual(true, lib.Authors[0].Name== "Lev" && lib.Authors[0].LastName == "Tolstoj");
         }
 
@@ -36,23 +37,26 @@ namespace ClassLibrary.Test
         public void AddEmptyAuthor()
         {
             Library lib = new Library();
-            Should.Throw<ArgumentNullException>(() => lib.AddAuthor("", "Tolstoj"));
+            Should.Throw<ArgumentNullException>(() => new Author("", "Tolstoj"));
         }
 
         [Test]
         public void AddNullAuthor()
         {
             Library lib = new Library();
-            Should.Throw<ArgumentNullException>(() => lib.AddAuthor("Lev", null));
+            Should.Throw<ArgumentNullException>(() => new Author("Lev", null));
         }
 
         [Test]
         public void AddNewAuthors()
         {
             Library lib = new Library();
-            lib.AddAuthor("Lev", "Tolstoj");
-            lib.AddAuthor("Alexsandr", "Puskin"); 
-            lib.AddAuthor("Anton", "Chehov");
+            Author author=new Author("Lev", "Tolstoj");
+            lib.AddAuthorInList(author);
+            author = new Author("Alexsandr", "Puskin");
+            lib.AddAuthorInList(author);
+            author = new Author("Anton", "Chehov");
+            lib.AddAuthorInList(author);
 
             Assert.IsTrue(lib.Authors[0].Name == "Lev");
             Assert.IsTrue(lib.Authors[0].LastName == "Tolstoj");
@@ -63,21 +67,15 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void AddSimularAuthors()
-        {
-            Library lib = new Library();
-            lib.AddAuthor("Lev", "Tolstoj");
-            lib.AddAuthor("Lev", "Tolstoj");
-            Assert.AreEqual(true, lib.Authors.Count == 1);
-        }
-
-        [Test]
         public void AddSimularNameOrLastNameAuthors()
         {
             Library lib = new Library();
-            lib.AddAuthor("Lev", "Tolstoj");
-            lib.AddAuthor("Alexsandr", "Tolstoj");
-            lib.AddAuthor("Alexsandr", "Puskin");
+            Author author = new Author("Lev", "Tolstoj");
+            lib.AddAuthorInList(author);
+            author = new Author("Alexsandr", "Tolstoj");
+            lib.AddAuthorInList(author);
+            author = new Author("Alexsandr", "Puskin");
+            lib.AddAuthorInList(author);
 
             Assert.IsTrue(lib.Authors[0].Name == "Lev");
             Assert.IsTrue(lib.Authors[0].LastName == "Tolstoj");
@@ -92,9 +90,12 @@ namespace ClassLibrary.Test
         public void CheckDifferentID()
         {
             Library lib = new Library();
-            lib.AddAuthor("Lev", "Tolstoj");
-            lib.AddAuthor("Alexsandr", "Tolstoj");
-            lib.AddAuthor("Alexsandr", "Puskin");
+            Author author = new Author("Lev", "Tolstoj");
+            lib.AddAuthorInList(author);
+            author = new Author("Alexsandr", "Tolstoj");
+            lib.AddAuthorInList(author);
+            author = new Author("Alexsandr", "Puskin");
+            lib.AddAuthorInList(author);
 
             Assert.IsTrue(lib.Authors[0].ID != lib.Authors[1].ID);
             Assert.IsTrue(lib.Authors[0].ID != lib.Authors[2].ID);
