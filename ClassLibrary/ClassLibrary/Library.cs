@@ -13,7 +13,7 @@ namespace ClassLibrary
         }
             = new List<Book>();
 
-        public void AddBookInLibrary(Book book)
+        public void AddBook(Book book)
         {
             if (book == null)
             {
@@ -30,7 +30,7 @@ namespace ClassLibrary
             Book returnBook = Books?.FirstOrDefault(x => x.ISBN ==book.ISBN);
             if (returnBook != null)
             {
-                throw new ArgumentException("This book's ISBN exists");
+                throw new ArgumentException($"This book's [{book.ISBN},{book.NameBook}] exists");
             }
             else
             {
@@ -45,7 +45,7 @@ namespace ClassLibrary
         } 
             = new List<Author>();
 
-        public void AddAuthorInList(Author author)
+        public void AddAuthor(Author author)
         {
             if (author == null)
             {
@@ -61,7 +61,7 @@ namespace ClassLibrary
             }
             else
             {
-                throw new ArgumentException("This author exists in List");
+                throw new ArgumentException($"Author [{author.ID}] {author.Name} {author.LastName} already added to the library");
             }
         }
 

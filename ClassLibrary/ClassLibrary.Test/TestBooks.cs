@@ -26,9 +26,9 @@ namespace ClassLibrary.Test
         {
             Library lib = new Library();
             Author author = new Author("Lev", "Tolstoj");
-            lib.AddAuthorInList(author);
+            lib.AddAuthor(author);
             Book book = new Book("226611156", "War and Peace", author);
-            lib.AddBookInLibrary(book);
+            lib.AddBook(book);
 
             Assert.IsTrue(lib.Books[0].ISBN == "226611156");
             Assert.IsTrue(lib.Books[0].NameBook == "War and Peace");
@@ -73,10 +73,10 @@ namespace ClassLibrary.Test
         {
             Library lib = new Library();
             Author author = new Author("Lev", "Tolstoj");
-            lib.AddAuthorInList(author);
+            lib.AddAuthor(author);
             Book book = new Book("226611156", "War and Peace", author);
-            lib.AddBookInLibrary(book);
-            Should.Throw<ArgumentException>(() => lib.AddBookInLibrary(new Book("226611156", "Mu-Mu", author)));
+            lib.AddBook(book);
+            Should.Throw<ArgumentException>(() => lib.AddBook(new Book("226611156", "Mu-Mu", author)));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace ClassLibrary.Test
         {
             Library lib = new Library();
             Author author = new Author("Lev", "Tolstoj");
-            Should.Throw<ArgumentException>(() => lib.AddBookInLibrary(new Book("226611156", "War and Peace", author)));
+            Should.Throw<ArgumentException>(() => lib.AddBook(new Book("226611156", "War and Peace", author)));
         }
     }
 }
