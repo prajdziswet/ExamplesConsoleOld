@@ -6,64 +6,8 @@ namespace ClassLibrary
 {
     public class Library
     {
-        public List<Book> Books
-        {
-            get;
-            private set;
-        }
-            = new List<Book>();
 
-        public void AddBook(Book book)
-        {
-            if (book == null)
-            {
-                throw new ArgumentNullException("Book's reference is null");
-            }
-            
-            Author returnAuthor = Authors?.FirstOrDefault(x =>
-                x.ID == book.AuthorBook.ID);
-            if (returnAuthor == null)
-            {
-                throw new ArgumentException("This author doesn't exist in list");
-            }
 
-            Book returnBook = Books?.FirstOrDefault(x => x.ISBN ==book.ISBN);
-            if (returnBook != null)
-            {
-                throw new ArgumentException($"This book's [{book.ISBN},{book.NameBook}] exists");
-            }
-            else
-            {
-                Books.Add(book);
-            }
-        }
-
-        public List<Author> Authors
-        {
-            get;
-            private set;
-        } 
-            = new List<Author>();
-
-        public void AddAuthor(Author author)
-        {
-            if (author == null)
-            {
-                throw new ArgumentNullException("Author's reference is null");
-            }
-
-            Author returnAuthor = Authors?.FirstOrDefault(x =>
-                x.ID == author.ID);
-
-            if (returnAuthor == null)
-            {
-                Authors.Add(author);
-            }
-            else
-            {
-                throw new ArgumentException($"Author [{author.ID}] {author.Name} {author.LastName} already added to the library");
-            }
-        }
 
         public List<Reader> Readers
         {
