@@ -17,7 +17,7 @@ namespace ClassLibrary
         {
             if (book == null)
             {
-                throw new NullReferenceException("Book's reference is null");
+                throw new ArgumentNullException("Book's reference is null");
             }
             
             Author returnAuthor = Authors?.FirstOrDefault(x =>
@@ -49,7 +49,7 @@ namespace ClassLibrary
         {
             if (author == null)
             {
-                throw new NullReferenceException("Author's reference is null");
+                throw new ArgumentNullException("Author's reference is null");
             }
 
             Author returnAuthor = Authors?.FirstOrDefault(x =>
@@ -77,7 +77,7 @@ namespace ClassLibrary
         {
             if (reader == null)
             {
-                throw new NullReferenceException("Reader reference is null");
+                throw new ArgumentNullException("Reader reference is null");
             }
             Reader returnReader =
                 Readers.FirstOrDefault(card => card.ID==reader.ID);

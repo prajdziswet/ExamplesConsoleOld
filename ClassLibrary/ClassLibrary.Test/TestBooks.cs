@@ -53,6 +53,13 @@ namespace ClassLibrary.Test
         }
 
         [Test]
+        public void AddBook_Null()
+        {
+            Library lib = new Library();
+            Should.Throw<ArgumentNullException>(() => lib.AddBook(null));
+        }
+
+        [Test]
         public void AddIncorrectISBN_Emty()
         {
             Library lib = new Library();

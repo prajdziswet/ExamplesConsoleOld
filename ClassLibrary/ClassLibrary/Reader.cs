@@ -22,7 +22,7 @@ namespace ClassLibrary
             private set;
         }
 
-        public List<Book> Books
+        public List<Book> BorrowedBooks
         {
             get;
             private set;
@@ -58,7 +58,7 @@ namespace ClassLibrary
                 throw new NullReferenceException("Book's reference is Null (received in AddBookInCardReader)");
             }
 
-            var findBook = Books.FirstOrDefault(x => x.ISBN==book.ISBN);
+            var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
             if (findBook != null)
             {
                 throw new ArgumentException("you have already taken this book");

@@ -41,10 +41,24 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void AddNullAuthor()
+        public void AddNullLastNameAuthor()
         {
             Library lib = new Library();
             Should.Throw<ArgumentNullException>(() => new Author("Lev", null));
+        }
+
+        [Test]
+        public void AddNullNameAuthor()
+        {
+            Library lib = new Library();
+            Should.Throw<ArgumentNullException>(() => new Author(null, "Tolstoj"));
+        }
+
+        [Test]
+        public void AddNullAuthor()
+        {
+            Library lib = new Library();
+            Should.Throw<ArgumentNullException>(() => lib.AddAuthor(null));
         }
 
         [Test]
