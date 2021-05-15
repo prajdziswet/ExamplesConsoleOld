@@ -34,12 +34,12 @@ namespace ClassLibrary
         // what should we return ?
         public List<Book> FindBooks(String NameBook="",String NameAutor="",String LastNameAutor="")
         {
-            List < Book > request = null;
+            IEnumerable < Book > request = null;
             if (NameBook.IsNullOrWhiteSpace() &&
                 NameAutor.IsNullOrWhiteSpace() &&
                 LastNameAutor.IsNullOrWhiteSpace())
             {
-                return Books;
+                return Books;//?? convert IEnumerable->list?
             }
             ;
             if (!NameBook.IsNullOrWhiteSpace())
@@ -61,7 +61,7 @@ namespace ClassLibrary
                     request.Where(book => book.AuthorBook.LastName == LastNameAutor).ToList();
             }
 
-            return request;
+            return request.ToList();
         }
 
         public Book GetBook(String ISBN)
