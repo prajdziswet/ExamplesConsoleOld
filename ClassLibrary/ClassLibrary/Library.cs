@@ -6,35 +6,18 @@ namespace ClassLibrary
 {
     public class Library
     {
+        private RepositoryBooks repositoryBooks = new RepositoryBooks();
 
+        //???
+        public void AddBook(Book book) => repositoryBooks.AddBook(book);
 
+        public List<Book> FindBooks(String NameBook = "", String NameAutor = "", String LastNameAutor = "") =>
+            repositoryBooks.FindBooks(NameBook, NameAutor, LastNameAutor);
 
-        public List<Reader> Readers
-        {
-            get;
-            private set;
-        }
-            = new List<Reader>();
+        public Book GetBook(String ISBN) => repositoryBooks.GetBook(ISBN);
 
+        private DepartmentReaders departmentReaders = new DepartmentReaders();
 
-        public void AddReader(Reader reader)
-        {
-            if (reader == null)
-            {
-                throw new ArgumentNullException("Reader reference is null");
-            }
-            Reader returnReader =
-                Readers.FirstOrDefault(card => card.ID==reader.ID);
-
-            if (returnReader == null)
-            {
-                Readers.Add(reader);
-            }
-            else
-            {
-                throw new ArgumentException("This reader exists in List");
-            }
-        }
 
 
     }

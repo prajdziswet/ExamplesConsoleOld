@@ -51,11 +51,11 @@ namespace ClassLibrary
             this.LastName = LastNameReader;
         }
 
-        public void WriteBookInCard(Book book)
+        public void AddBookInCard(Book book)
         {
             if (book == null)
             {
-                throw new NullReferenceException("Book's reference is Null (received in AddBookInCardReader)");
+                throw new ArgumentNullException("Book's reference is Null (received in AddBookInCardReader)");
             }
 
             var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
@@ -63,7 +63,10 @@ namespace ClassLibrary
             {
                 throw new ArgumentException("you have already taken this book");
             }
-
+            else
+            {
+                BorrowedBooks.Add(book);
+            }
 
         }
     }
