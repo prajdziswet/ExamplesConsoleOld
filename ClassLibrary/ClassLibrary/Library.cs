@@ -18,6 +18,11 @@ namespace ClassLibrary
 
         private DepartmentReaders departmentReaders = new DepartmentReaders();
 
+        //???
+        public void AddReader(Reader reader) => departmentReaders.AddReader(reader);
+
+        public Reader GetReader(int IDReader) => departmentReaders.GetReader(IDReader);
+
 
 
     }
