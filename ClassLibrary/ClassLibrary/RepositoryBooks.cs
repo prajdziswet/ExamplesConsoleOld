@@ -6,6 +6,9 @@ namespace ClassLibrary
 {
     public class RepositoryBooks
     {
+        // looks like with "DepartmentReaders", you can write for one occasion...  
+
+        //for comfortable I do it open, but I break AV1014 (An object should not expose any other classes it depends on for Library)
         private List<Book> Books
         {
             get;
@@ -32,6 +35,8 @@ namespace ClassLibrary
         }
 
         // what should we return ?
+        // what AV1130? I return "list" (For convenience), but use IEnumerable inside 
+        // And how should I convert the list (just below)? 
         public List<Book> FindBooks(String NameBook="",String NameAutor="",String LastNameAutor="")
         {
             IEnumerable < Book > request = null;
@@ -39,7 +44,7 @@ namespace ClassLibrary
                 NameAutor.IsNullOrWhiteSpace() &&
                 LastNameAutor.IsNullOrWhiteSpace())
             {
-                return Books;//?? convert IEnumerable->list?
+                return Books;//??? convert IEnumerable->list?
             }
             ;
             if (!NameBook.IsNullOrWhiteSpace())
@@ -64,6 +69,7 @@ namespace ClassLibrary
             return request.ToList();
         }
 
+        //What AV1135?
         public Book GetBook(String ISBN)
         {
             return Books.FirstOrDefault(book => book.ISBN == ISBN);
