@@ -41,7 +41,8 @@ namespace ClassLibrary
             {
                 throw new ArgumentNullException("Name is empty");
             }
-            else if (LastNameReader.IsNullOrWhiteSpace())
+
+            if (LastNameReader.IsNullOrWhiteSpace())
             {
                 throw new ArgumentNullException("LastName is empty");
             }

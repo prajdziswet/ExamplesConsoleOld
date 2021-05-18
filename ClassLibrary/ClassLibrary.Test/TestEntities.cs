@@ -113,6 +113,18 @@ namespace ClassLibrary.Test
         }
 
         [Test]
+        public void AddBookInCard()
+        {
+            Reader reader = new Reader("Lev", "Tolstoj");
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            reader.AddBookInCard(book);
+
+            reader.BorrowedBooks.Count.ShouldBe(1);
+            reader.BorrowedBooks[0].ShouldBe(book);
+        }
+
+        [Test]
         public void AddEqualBooksInCard()
         {
             Reader reader = new Reader("Lev", "Tolstoj");

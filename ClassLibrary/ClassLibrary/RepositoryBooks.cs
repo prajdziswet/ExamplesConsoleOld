@@ -34,42 +34,39 @@ namespace ClassLibrary
             }
         }
 
-        // what should we return ?
-        // what AV1130? I return "list" (For convenience), but use IEnumerable inside 
-        // And how should I convert the list (just below)? 
+ 
         public List<Book> FindBooks(String NameBook="",String NameAutor="",String LastNameAutor="")
         {
             IEnumerable < Book > request = null;
+
             if (NameBook.IsNullOrWhiteSpace() &&
                 NameAutor.IsNullOrWhiteSpace() &&
                 LastNameAutor.IsNullOrWhiteSpace())
             {
-                return Books;//??? convert IEnumerable->list?
-            }
-            ;
-            if (!NameBook.IsNullOrWhiteSpace())
-            {
-                request= Books.Where(book => book.NameBook == NameBook).ToList();
+                return Books.ToList();
             }
 
-            if (!NameAutor.IsNullOrWhiteSpace())
+            if (NameBook.IsNullOrWhiteSpace()==false)
             {
-                request =(request == null)?
-                            Books.Where(book => book.AuthorBook.Name == NameAutor).ToList():
-                            request.Where(book => book.AuthorBook.Name == NameAutor).ToList();
+                request= Books.Where(book => book.NameBook == NameBook);
             }
 
-            if (!LastNameAutor.IsNullOrWhiteSpace())
+            if (NameAutor.IsNullOrWhiteSpace()==false)
             {
-                request = (request == null) ?
-                    Books.Where(book => book.AuthorBook.LastName == LastNameAutor).ToList() :
-                    request.Where(book => book.AuthorBook.LastName == LastNameAutor).ToList();
+                //how best to replace? 
+                request = request?.Where(book => book.AuthorBook.Name == NameAutor)
+                    ?? Books.Where(book => book.AuthorBook.Name == NameAutor);
+            }
+
+            if (LastNameAutor.IsNullOrWhiteSpace()==false)
+            {
+                request = request?.Where(book => book.AuthorBook.LastName == LastNameAutor)
+                          ?? Books.Where(book => book.AuthorBook.LastName == LastNameAutor);
             }
 
             return request.ToList();
         }
 
-        //What AV1135?
         public Book GetBook(String ISBN)
         {
             return Books.FirstOrDefault(book => book.ISBN == ISBN);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using NUnit.Framework;
 using Shouldly;
 
@@ -49,99 +50,75 @@ namespace ClassLibrary.Test
 
             List<Book> books = RB.FindBooks();
 
+            books.Count.ShouldBe(1);
             Assert.IsTrue(books[0].ISBN == "226611156");
             Assert.IsTrue(books[0].NameBook == "War and Peace");
             Assert.IsTrue(books[0].AuthorBook == author);
         }
 
-        [Test]
-        public void FindBookAll()
+        [TestCase("","","",2)]
+        [TestCase("", "", "Tolstoj", 2)]
+        [TestCase("", "Lev", "", 2)]
+        [TestCase("", "Lev", "Tolstoj", 2)]
+        [TestCase("War and Peace", "", "", 1)]
+        [TestCase("War and Peace", "", "Tolstoj", 1)]
+        [TestCase("War and Peace", "Lev", "", 1)]
+        [TestCase("War and Peace", "Lev", "Tolstoj", 1)]
+        public void FindBook(String NameBook,String NameAuthor,String LastNameAuthor,int CountBook)
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
             RB.AddBook(book);
-            Author author1 = new Author("Lev", "Tolstoj");
-            Book book1 = new Book("226611188", "Anna", author1);
+            Book book1 = new Book("226611188", "Anna", author);
             RB.AddBook(book1);
 
-            List<Book> books = RB.FindBooks();
+            List<Book> books = RB.FindBooks(NameBook, NameAuthor, LastNameAuthor);
 
-            books[0].ShouldBe(book);
-            books[1].ShouldBe(book1);
+            books.Count.ShouldBe(CountBook);
+
+            switch (CountBook)
+            {
+                case 2:
+                { 
+                    books[0].ShouldBe(book);
+                    books[1].ShouldBe(book1);
+                    break;
+                }
+                case 1:
+                {
+                    books[0].ShouldBe(book);
+                    break;
+                }
+            }
         }
 
-        [Test]
-        public void FindBookNameBook()
+        [TestCase("", "", "")]
+        [TestCase("", "", "Tolstoj")]
+        [TestCase("", "Lev", "")]
+        [TestCase("", "Lev", "Tolstoj")]
+        [TestCase("War and Peace", "", "")]
+        [TestCase("War and Peace", "", "Tolstoj")]
+        [TestCase("War and Peace", "Lev", "")]
+        [TestCase("War and Peace", "Lev", "Tolstoj")]
+        public void NotFindBook(String NameBook, String NameAuthor, String LastNameAuthor)
         {
             RepositoryBooks RB = new RepositoryBooks();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            RB.AddBook(book);
+            if (NameBook.IsNullOrWhiteSpace()==false ||
+                NameAuthor.IsNullOrWhiteSpace() == false ||
+                LastNameAuthor.IsNullOrWhiteSpace() == false)
+            {
+                Author author = new Author("Alexsandr", "Pushkin");
+                Book book = new Book("226611156", "Evgenij Onegin", author);
+                RB.AddBook(book);
+                Book book1 = new Book("226611188", "Rusalka", author);
+                RB.AddBook(book1);
+            }
 
-            List<Book> books = RB.FindBooks("War and Peace");
+            List<Book> books = RB.FindBooks(NameBook, NameAuthor, LastNameAuthor);
 
-            books[0].ShouldBe(book);
+            books.Count.ShouldBe(0);
         }
-
-        [Test]
-        public void FindBookNameAuthor()
-        {
-            RepositoryBooks RB = new RepositoryBooks();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            RB.AddBook(book);
-
-            List<Book> books = RB.FindBooks("", "Lev");
-
-            books[0].ShouldBe(book);
-        }
-
-        [Test]
-        public void FindBookLastNameAuthor()
-        {
-            RepositoryBooks RB = new RepositoryBooks();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            RB.AddBook(book);
-
-            List<Book> books = RB.FindBooks("", "", "Tolstoj");
-
-            books[0].ShouldBe(book);
-        }
-
-        [Test]
-        public void FindOneBook()
-        {
-            RepositoryBooks RB = new RepositoryBooks();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            RB.AddBook(book);
-            Author author1 = new Author("Lev", "Tolstoj");
-            Book book1 = new Book("226611188", "Anna", author1);
-            RB.AddBook(book1);
-
-            List<Book> books = RB.FindBooks( "War and Peace");
-
-            books.Count.ShouldBe(1);
-        }
-
-        [Test]
-        public void FindTwoBook()
-        {
-            RepositoryBooks RB = new RepositoryBooks();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            RB.AddBook(book);
-            Author author1 = new Author("Lev", "Tolstoj");
-            Book book1 = new Book("226611188", "Anna", author1);
-            RB.AddBook(book1);
-
-            List<Book> books = RB.FindBooks("", "Lev");
-
-            books.Count.ShouldBe(2);
-        }
-
         [Test]
         public void GetBook()
         {
