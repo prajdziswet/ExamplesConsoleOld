@@ -37,14 +37,7 @@ namespace ClassLibrary
  
         public List<Book> FindBooks(String NameBook="",String NameAutor="",String LastNameAutor="")
         {
-            IEnumerable < Book > request = null;
-            
-            if (NameBook.IsNullOrWhiteSpace() &&
-                NameAutor.IsNullOrWhiteSpace() &&
-                LastNameAutor.IsNullOrWhiteSpace())
-            {
-                request = Books;
-            }
+            IEnumerable < Book > request = Books;
 
             if (NameBook.IsNullOrWhiteSpace()==false&&request?.Count()!=0)
             {
