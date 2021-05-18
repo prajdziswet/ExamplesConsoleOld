@@ -38,30 +38,27 @@ namespace ClassLibrary
         public List<Book> FindBooks(String NameBook="",String NameAutor="",String LastNameAutor="")
         {
             IEnumerable < Book > request = null;
-
+            
             if (NameBook.IsNullOrWhiteSpace() &&
                 NameAutor.IsNullOrWhiteSpace() &&
                 LastNameAutor.IsNullOrWhiteSpace())
             {
-                return Books.ToList();
+                request = Books;
             }
 
-            if (NameBook.IsNullOrWhiteSpace()==false)
+            if (NameBook.IsNullOrWhiteSpace()==false&&request?.Count()!=0)
             {
-                request= Books.Where(book => book.NameBook == NameBook);
+                request= request.Where(book => book.NameBook == NameBook);
             }
 
-            if (NameAutor.IsNullOrWhiteSpace()==false)
+            if (NameAutor.IsNullOrWhiteSpace()==false && request?.Count() != 0)
             {
-                //how best to replace? 
-                request = request?.Where(book => book.AuthorBook.Name == NameAutor)
-                    ?? Books.Where(book => book.AuthorBook.Name == NameAutor);
+                request = request.Where(book => book.AuthorBook.Name == NameAutor);
             }
 
-            if (LastNameAutor.IsNullOrWhiteSpace()==false)
+            if (LastNameAutor.IsNullOrWhiteSpace()==false && request?.Count() != 0)
             {
-                request = request?.Where(book => book.AuthorBook.LastName == LastNameAutor)
-                          ?? Books.Where(book => book.AuthorBook.LastName == LastNameAutor);
+                request = request.Where(book => book.AuthorBook.LastName == LastNameAutor);
             }
 
             return request.ToList();
