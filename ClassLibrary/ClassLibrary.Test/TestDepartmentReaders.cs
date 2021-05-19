@@ -41,5 +41,34 @@ namespace ClassLibrary.Test
             DepartmentReaders DR = new DepartmentReaders();
             DR.GetReader(0).ShouldBe(null);
         }
+
+        [Test]
+        public void AddBookNotExistReader()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Reader reader = new Reader("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+
+            Should.Throw<ArgumentException>(()=>DR.AddBookInCard(reader,book));
+        }
+
+        [Test]
+        public void AddBorrowedBookForReader()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+            DR.AddBookInCard(reader,book);
+            Reader reader1 = new Reader("Alex", "Tolstoj");
+            DR.AddReader(reader1);
+            
+
+            Should.Throw<ArgumentException>(() => DR.AddBookInCard(reader1, book));
+        }
+
+
     }
 }

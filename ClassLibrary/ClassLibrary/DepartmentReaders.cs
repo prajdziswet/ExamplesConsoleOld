@@ -37,5 +37,31 @@ namespace ClassLibrary
         {
             return Readers.FirstOrDefault(x => x.ID == IDReader);
         }
+
+        public bool CheckBorrowedBook(Book book)
+        {
+            Book borrowedBook = Readers.SelectMany(x => x.BorrowedBooks).FirstOrDefault(x=>x==book);
+            return borrowedBook != null;
+        }
+
+        public bool CheckReader(Reader reader)
+        {
+            return GetReader(reader.ID)!=null;
+        }
+
+        public void AddBookInCard(Reader reader,Book book)
+        {
+            if (!CheckReader(reader))
+            {
+                throw new ArgumentException("This reader not Exist");
+            }
+
+            if (CheckBorrowedBook(book))
+            {
+                throw new ArgumentException($"This book with ISBN={book.ISBN} borrowed");
+            }
+
+            reader.AddBookInCard(book);
+        }
     }
 }
