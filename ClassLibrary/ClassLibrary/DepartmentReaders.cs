@@ -49,8 +49,13 @@ namespace ClassLibrary
             return GetReader(reader.ID)!=null;
         }
 
-        public void AddBookInCard(Reader reader,Book book)
+        public void BorrowBook(Reader reader,Book book)
         {
+            if (!CheckReader(reader))
+            {
+                throw new ArgumentNullException($"Null Argument {((reader==null)?"reader":"book")} in AddBook");
+            }
+
             if (!CheckReader(reader))
             {
                 throw new ArgumentException("This reader not Exist");

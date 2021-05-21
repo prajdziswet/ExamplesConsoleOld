@@ -50,23 +50,35 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
 
-            Should.Throw<ArgumentException>(()=>DR.AddBookInCard(reader,book));
+            Should.Throw<ArgumentException>(()=>DR.BorrowBook(reader,book));
         }
 
         [Test]
-        public void AddBorrowedBookForReader()
+        public void BorrowedBookForReader()
         {
             DepartmentReaders DR = new DepartmentReaders();
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
             Reader reader = new Reader("Lev", "Tolstoj");
             DR.AddReader(reader);
-            DR.AddBookInCard(reader,book);
+            DR.BorrowBook(reader,book);
             Reader reader1 = new Reader("Alex", "Tolstoj");
             DR.AddReader(reader1);
             
 
-            Should.Throw<ArgumentException>(() => DR.AddBookInCard(reader1, book));
+            Should.Throw<ArgumentException>(() => DR.BorrowBook(reader1, book));
+        }
+
+        public void BorrowedBookNullArgument()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+
+            Should.Throw<ArgumentNullException>(() => DR.BorrowBook(null, book));
+            Should.Throw<ArgumentNullException>(() => DR.BorrowBook(reader, null));
         }
 
 
