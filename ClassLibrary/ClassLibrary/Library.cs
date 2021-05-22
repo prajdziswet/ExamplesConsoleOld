@@ -6,60 +6,20 @@ namespace ClassLibrary
 {
     public class Library
     {
-        public List<Book> Books
-        {
-            get;
-            private set;
-        }
-            = new List<Book>();
+        private RepositoryBooks repositoryBooks = new RepositoryBooks();
 
-        public void AddBook(String ISBN, String nameBook, Author author)
-        {
-            if (ISBN.IsNullOrWhiteSpace() || nameBook.IsNullOrWhiteSpace() || author == null)
-            {
-                throw new ArgumentNullException("One of the fields of the book is empty");
-            }
+        public void AddBookInLibrary(Book book) => repositoryBooks.AddBook(book);
 
-            Book returnBook = Books?.FirstOrDefault(x => x.ISBN == ISBN);
-            Author authorInAuthors = Authors?.FirstOrDefault(x => x.ID == author.ID);
+        public List<Book> FindBooks(String NameBook = "", String NameAutor = "", String LastNameAutor = "") =>
+            repositoryBooks.FindBooks(NameBook, NameAutor, LastNameAutor);
 
-            if (returnBook != null|| authorInAuthors==null)
-            {
-                throw new ArgumentException("This book's ISBN exists or author doesn't exist");
-            }
-            else
-            {
-                returnBook = new Book(ISBN, nameBook, author);
-                Books.Add(returnBook);
-            }
-        }
+        public Book GetBook(String ISBN) => repositoryBooks.GetBook(ISBN);
 
-        public List<Author> Authors
-        {
-            get;
-            private set;
-        } 
-            = new List<Author>();
+        private DepartmentReaders departmentReaders = new DepartmentReaders();
 
-        public Author AddAuthor(String nameAuthor,String lastNameAuthor)
-        {
-            if (nameAuthor.IsNullOrWhiteSpace() || lastNameAuthor.IsNullOrWhiteSpace())
-            {
-                throw new NullReferenceException("The author's first or last name is empty ");
-            }
+        public void AddReader(Reader reader) => departmentReaders.AddReader(reader);
 
-            Author returnAuthor = Authors?.FirstOrDefault(author =>
-                author.Name == nameAuthor && author.LastName == lastNameAuthor);
-
-            if (returnAuthor == null)
-            {
-                returnAuthor = new Author(nameAuthor, lastNameAuthor);
-                Authors.Add(returnAuthor);
-            }
-
-            return returnAuthor;
-        }
-
+        public Reader GetReader(int IDReader) => departmentReaders.GetReader(IDReader);
 
     }
 }
