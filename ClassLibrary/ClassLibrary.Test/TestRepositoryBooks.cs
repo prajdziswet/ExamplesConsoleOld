@@ -142,9 +142,41 @@ namespace ClassLibrary.Test
             RB.AddBook(book);
             Author author1 = new Author("Lev", "Tolstoj");
             Book book1 = new Book("226611188", "Anna", author1);
+
+            RB.GetBook(book1.ID).ShouldBe(null);
+        }
+
+        [Test]
+        public void AddBookEqualISBN()
+        {
+            RepositoryBooks RB = new RepositoryBooks();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            RB.AddBook(book);
+            Book book1 = new Book("226611156", "War and Peace", author);
             RB.AddBook(book1);
 
-            RB.GetBook(book.ID).ShouldBe(null);
+            List<Book> books = RB.FindBooks();
+
+            books.Count.ShouldBe(2);
+        }
+
+        [Test]
+        public void AddDifferentBookEqualISBN()
+        {
+            RepositoryBooks RB = new RepositoryBooks();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            RB.AddBook(book);
+
+            Book book1 = new Book("226611156", "War and Peace", new Author("Al", "Tolstoj"));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
+
+            book1 = new Book("226611156", "War and Peace", new Author("Lev", "Chehov"));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
+
+            book1 = new Book("226611156", "Mu-MU", new Author("Lev", "Tolstoj"));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
         }
     }
 }

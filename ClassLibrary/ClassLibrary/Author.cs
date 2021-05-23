@@ -38,5 +38,8 @@ namespace ClassLibrary
             Name = name;
             LastName = lastName;
         }
+
+        public bool EqualArgument(Author author) =>
+            Name == author.Name && LastName == author.LastName;
     }
 }
