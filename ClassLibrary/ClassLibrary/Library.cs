@@ -13,7 +13,7 @@ namespace ClassLibrary
         public List<Book> FindBooks(String NameBook = "", String NameAutor = "", String LastNameAutor = "") =>
             repositoryBooks.FindBooks(NameBook, NameAutor, LastNameAutor);
 
-        public Book GetBook(String ISBN) => repositoryBooks.GetBook(ISBN);
+        public Book GetBook(int ID) => repositoryBooks.GetBook(ID);
 
         private DepartmentReaders departmentReaders = new DepartmentReaders();
 

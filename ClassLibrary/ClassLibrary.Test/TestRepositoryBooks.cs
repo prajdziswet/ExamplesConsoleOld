@@ -31,13 +31,13 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void AddIncorrectISBN_NotUnique()
+        public void AddBookISExist()
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
             RB.AddBook(book);
-            Should.Throw<ArgumentException>(() => RB.AddBook(new Book("226611156", "Mu-Mu", author)));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book));
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace ClassLibrary.Test
             Book book1 = new Book("226611188", "Anna", author1);
             RB.AddBook(book1);
 
-            RB.GetBook("226611156").ShouldBe(book);
+            RB.GetBook(book.ID).ShouldBe(book);
         }
 
         [Test]
@@ -144,7 +144,7 @@ namespace ClassLibrary.Test
             Book book1 = new Book("226611188", "Anna", author1);
             RB.AddBook(book1);
 
-            RB.GetBook("226611999").ShouldBe(null);
+            RB.GetBook(book.ID).ShouldBe(null);
         }
     }
 }

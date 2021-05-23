@@ -23,10 +23,10 @@ namespace ClassLibrary
                 throw new ArgumentNullException("Book's reference is null");
             }
 
-            Book foundBook = Books?.FirstOrDefault(x => x.ISBN == book.ISBN);
+            Book foundBook = Books?.FirstOrDefault(x => x.ID == book.ID);
             if (foundBook != null)
             {
-                throw new ArgumentException($"This book's [{book.ISBN},{book.NameBook}] exists");
+                throw new ArgumentException($"This book's [{book.ID},{book.NameBook}] exists");
             }
             else
             {
@@ -39,17 +39,17 @@ namespace ClassLibrary
         {
             IEnumerable < Book > request = Books;
 
-            if (NameBook.IsNullOrWhiteSpace()==false&&request?.Count()!=0)
+            if (NameBook.IsExist())
             {
                 request= request.Where(book => book.NameBook == NameBook);
             }
 
-            if (NameAutor.IsNullOrWhiteSpace()==false && request?.Count() != 0)
+            if (NameAutor.IsExist())
             {
                 request = request.Where(book => book.AuthorBook.Name == NameAutor);
             }
 
-            if (LastNameAutor.IsNullOrWhiteSpace()==false && request?.Count() != 0)
+            if (LastNameAutor.IsExist())
             {
                 request = request.Where(book => book.AuthorBook.LastName == LastNameAutor);
             }
@@ -57,9 +57,9 @@ namespace ClassLibrary
             return request.ToList();
         }
 
-        public Book GetBook(String ISBN)
+        public Book GetBook(int ID)
         {
-            return Books.FirstOrDefault(book => book.ISBN == ISBN);
+            return Books.FirstOrDefault(book => book.ID == ID);
         }
     }
 }
