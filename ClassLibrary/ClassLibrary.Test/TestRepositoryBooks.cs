@@ -180,21 +180,18 @@ namespace ClassLibrary.Test
             books.Count.ShouldBe(2);
         }
 
-        [Test]
-        public void AddDifferentBookEqualISBN()
+        [TestCase("War and Peace", "Al", "Tolstoj"]
+        [TestCase("War and Peace","Lev", "Chehov"]
+        [TestCase("Mu - MU", "Lev", "Tolstoj"]
+        public void AddDifferentBookEqualISBN(String NameBook, String NameAuthor, String LastNameAuthor)
         {
             RepositoryBooks RB = new RepositoryBooks();
+            String ISBN = "226611156";
             Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
+            Book book = new Book(ISBN, "War and Peace", author);
             RB.AddBook(book);
 
-            Book book1 = new Book("226611156", "War and Peace", new Author("Al", "Tolstoj"));
-            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
-
-            book1 = new Book("226611156", "War and Peace", new Author("Lev", "Chehov"));
-            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
-
-            book1 = new Book("226611156", "Mu-MU", new Author("Lev", "Tolstoj"));
+            Book book1 = new Book(ISBN, NameBook, new Author(NameAuthor, LastNameAuthor));
             Should.Throw<ArgumentException>(() => RB.AddBook(book1));
         }
     }
