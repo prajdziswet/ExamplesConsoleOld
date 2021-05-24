@@ -29,13 +29,13 @@ namespace ClassLibrary
                 throw new ArgumentException($"This book's [{book.ID},{book.NameBook}] exists");
             }
 
-                var foundBooks = Books?.Where(x => x.ISBN == book.ISBN);
-                bool check=(bool) foundBooks?.Any(x=>x.NameBook!=book.NameBook||!x.AuthorBook.EqualArgument(book.AuthorBook));
+            foundBook = Books?.FirstOrDefault(x => x.ISBN == book.ISBN&&
+                                                   x.NameBook != book.NameBook ||
+                                                   !x.AuthorBook.Equals(book.AuthorBook));
 
-            if (check)
-            {
-                foundBook = foundBooks?.FirstOrDefault(x => x.NameBook != book.NameBook || !x.AuthorBook.EqualArgument(book.AuthorBook));
-                throw new ArgumentException($"This book with {book.ISBN} exist! Example is {foundBook.NameBook}-{foundBook.AuthorBook.Name}-{foundBook.AuthorBook.Name}");
+            if (foundBook!=null)
+            {              
+                throw new ArgumentException($"This book have same properties with book {foundBook.ToString()}");
             }
 
             Books.Add(book);

@@ -31,7 +31,7 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void AddBookISExist()
+        public void AddSameBook()
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
@@ -40,8 +40,27 @@ namespace ClassLibrary.Test
             Should.Throw<ArgumentException>(() => RB.AddBook(book));
         }
 
+        [TestCase("226611156", "War and Peace",0)]
+        [TestCase("226611156", "War and Peace",1)]
+        public void AddBookWithSameArgument(String ISBN,String NameBook, int numberbook)
+        {
+            RepositoryBooks RB = new RepositoryBooks();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book(ISBN, NameBook, author);
+            RB.AddBook(book);
+            Book book1 = new Book(ISBN, NameBook, author);
+            RB.AddBook(book1);
+
+            List<Book> books = RB.FindBooks();
+
+            books.Count.ShouldBe(2);
+            Assert.IsTrue(books[numberbook].ISBN == ISBN);
+            Assert.IsTrue(books[numberbook].NameBook == NameBook);
+            Assert.IsTrue(books[numberbook].AuthorBook == author);
+        }
+
         [Test]
-        public void AddNewBook()
+        public void AddOneBook()
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
