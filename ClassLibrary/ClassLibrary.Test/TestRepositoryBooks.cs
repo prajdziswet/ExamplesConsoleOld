@@ -180,9 +180,9 @@ namespace ClassLibrary.Test
             books.Count.ShouldBe(2);
         }
 
-        [TestCase("War and Peace", "Al", "Tolstoj"]
-        [TestCase("War and Peace","Lev", "Chehov"]
-        [TestCase("Mu - MU", "Lev", "Tolstoj"]
+        [TestCase("War and Peace", "Al", "Tolstoj")]
+        [TestCase("War and Peace","Lev", "Chehov")]
+        [TestCase("Mu - MU", "Lev", "Tolstoj")]
         public void AddDifferentBookEqualISBN(String NameBook, String NameAuthor, String LastNameAuthor)
         {
             RepositoryBooks RB = new RepositoryBooks();
