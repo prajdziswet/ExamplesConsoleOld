@@ -44,5 +44,10 @@ namespace ClassLibrary
             this.NameBook = NameBook;
             this.AuthorBook = AuthorBook;
         }
+
+        public String ArgumentsToString()
+        {
+            return $"Book \"{ISBN}\" - \"{NameBook}\" - \"{AuthorBook.ArgumentsToString()}\" ";
+        }
     }
 }

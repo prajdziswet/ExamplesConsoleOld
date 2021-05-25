@@ -13,12 +13,4 @@ public static class StringHelper
         return !String.IsNullOrWhiteSpace(str);
     }
 
-    public static String ToString(this Author author)
-    {
-        return $"{author.LastName} {author.Name}";
-    }
-    public static String ToString(this Book book)
-    {
-        return $"Book \"{book.ISBN}\" - \"{book.NameBook}\" - \"{book.AuthorBook.ToString()}\" ";
-    }
 }

@@ -31,11 +31,11 @@ namespace ClassLibrary
 
             foundBook = Books?.FirstOrDefault(x => x.ISBN == book.ISBN&&
                                                    x.NameBook != book.NameBook ||
-                                                   !x.AuthorBook.Equals(book.AuthorBook));
+                                                   !x.AuthorBook.AreSame(book.AuthorBook));
 
             if (foundBook!=null)
             {              
-                throw new ArgumentException($"This book have same ISBN, but different properties with book {foundBook.ToString()}");
+                throw new ArgumentException($"This book have same ISBN, but different properties with book {foundBook.ArgumentsToString()}");
             }
 
             Books.Add(book);

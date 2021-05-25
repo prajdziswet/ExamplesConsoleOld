@@ -39,7 +39,7 @@ namespace ClassLibrary
             LastName = lastName;
         }
 
-        public bool Equals(Author author) 
+        public bool AreSame(Author author) 
             {
             if (author is null)
             {
@@ -78,6 +78,11 @@ namespace ClassLibrary
         }
 
         public static bool operator !=(Author lhs, Author rhs) => !(lhs == rhs);
+
+        public String ArgumentsToString()
+        {
+            return $"{Name} {LastName}";
+        }
 
     }
 }

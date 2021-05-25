@@ -199,5 +199,6 @@ namespace ClassLibrary.Test
             Book book1 = new Book(ISBN, NameBook, new Author(NameAuthor, LastNameAuthor));
             Should.Throw<ArgumentException>(() => RB.AddBook(book1));
         }
+
     }
 }
