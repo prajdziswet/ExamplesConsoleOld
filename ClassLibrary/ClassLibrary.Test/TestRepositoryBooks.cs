@@ -40,10 +40,11 @@ namespace ClassLibrary.Test
             Should.Throw<ArgumentException>(() => RB.AddBook(book));
         }
 
-        [TestCase("226611156", "War and Peace",0)]
-        [TestCase("226611156", "War and Peace",1)]
-        public void AddBookWithSameArgument(String ISBN,String NameBook, int numberbook)
-        {
+        public void AddBookWithSameArgument()
+        {           
+            String ISBN = "226611156";
+            String NameBook = "War and Peace";
+
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book(ISBN, NameBook, author);
@@ -54,9 +55,13 @@ namespace ClassLibrary.Test
             List<Book> books = RB.FindBooks();
 
             books.Count.ShouldBe(2);
-            Assert.IsTrue(books[numberbook].ISBN == ISBN);
-            Assert.IsTrue(books[numberbook].NameBook == NameBook);
-            Assert.IsTrue(books[numberbook].AuthorBook == author);
+            Assert.IsTrue(books[0].ISBN == ISBN);
+            Assert.IsTrue(books[0].NameBook == NameBook);
+            Assert.IsTrue(books[0].AuthorBook == author);
+
+            Assert.IsTrue(books[1].ISBN == ISBN);
+            Assert.IsTrue(books[1].NameBook == NameBook);
+            Assert.IsTrue(books[1].AuthorBook == author);
         }
 
         [Test]

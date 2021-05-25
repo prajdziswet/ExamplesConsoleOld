@@ -35,7 +35,7 @@ namespace ClassLibrary
 
             if (foundBook!=null)
             {              
-                throw new ArgumentException($"This book have same properties with book {foundBook.ToString()}");
+                throw new ArgumentException($"This book have same ISBN, but different properties with book {foundBook.ToString()}");
             }
 
             Books.Add(book);
