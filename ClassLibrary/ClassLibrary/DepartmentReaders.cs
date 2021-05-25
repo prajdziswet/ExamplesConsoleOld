@@ -51,14 +51,14 @@ namespace ClassLibrary
 
         public void BorrowBook(Reader reader,Book book)
         {
-            if (!CheckReader(reader))
+            if (reader == null||book==null)
             {
                 throw new ArgumentNullException($"Null Argument {((reader==null)?"reader":"book")} in AddBook");
             }
 
             if (!CheckReader(reader))
             {
-                throw new ArgumentException("This reader not Exist");
+                throw new ArgumentException("This reader not Exist in DataBase");
             }
 
             if (CheckBorrowedBook(book))

@@ -71,6 +71,15 @@ namespace ClassLibrary.Test
             Assert.AreEqual(author, book.AuthorBook);
         }
 
+        [Test]
+        public void DifferentIDBooks()
+        {
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Book book1 = new Book("226611156", "War and Peace", author);
+            book.ID.ShouldNotBe(book1.ID);
+        }
+
         //-----------------------------Test entity Reader---------------------------------------
         [Test]
         public void AddArgumentEmptyReader()

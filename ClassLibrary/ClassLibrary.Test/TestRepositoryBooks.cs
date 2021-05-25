@@ -31,17 +31,41 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void AddIncorrectISBN_NotUnique()
+        public void AddSameBook()
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
             RB.AddBook(book);
-            Should.Throw<ArgumentException>(() => RB.AddBook(new Book("226611156", "Mu-Mu", author)));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book));
+        }
+
+        public void AddBookWithSameArgument()
+        {           
+            String ISBN = "226611156";
+            String NameBook = "War and Peace";
+
+            RepositoryBooks RB = new RepositoryBooks();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book(ISBN, NameBook, author);
+            RB.AddBook(book);
+            Book book1 = new Book(ISBN, NameBook, author);
+            RB.AddBook(book1);
+
+            List<Book> books = RB.FindBooks();
+
+            books.Count.ShouldBe(2);
+            Assert.IsTrue(books[0].ISBN == ISBN);
+            Assert.IsTrue(books[0].NameBook == NameBook);
+            Assert.IsTrue(books[0].AuthorBook == author);
+
+            Assert.IsTrue(books[1].ISBN == ISBN);
+            Assert.IsTrue(books[1].NameBook == NameBook);
+            Assert.IsTrue(books[1].AuthorBook == author);
         }
 
         [Test]
-        public void AddNewBook()
+        public void AddOneBook()
         {
             RepositoryBooks RB = new RepositoryBooks();
             Author author = new Author("Lev", "Tolstoj");
@@ -130,7 +154,7 @@ namespace ClassLibrary.Test
             Book book1 = new Book("226611188", "Anna", author1);
             RB.AddBook(book1);
 
-            RB.GetBook("226611156").ShouldBe(book);
+            RB.GetBook(book.ID).ShouldBe(book);
         }
 
         [Test]
@@ -142,9 +166,39 @@ namespace ClassLibrary.Test
             RB.AddBook(book);
             Author author1 = new Author("Lev", "Tolstoj");
             Book book1 = new Book("226611188", "Anna", author1);
+
+            RB.GetBook(book1.ID).ShouldBe(null);
+        }
+
+        [Test]
+        public void AddBookEqualISBN()
+        {
+            RepositoryBooks RB = new RepositoryBooks();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            RB.AddBook(book);
+            Book book1 = new Book("226611156", "War and Peace", author);
             RB.AddBook(book1);
 
-            RB.GetBook("226611999").ShouldBe(null);
+            List<Book> books = RB.FindBooks();
+
+            books.Count.ShouldBe(2);
         }
+
+        [TestCase("War and Peace", "Al", "Tolstoj")]
+        [TestCase("War and Peace","Lev", "Chehov")]
+        [TestCase("Mu - MU", "Lev", "Tolstoj")]
+        public void AddDifferentBookEqualISBN(String NameBook, String NameAuthor, String LastNameAuthor)
+        {
+            RepositoryBooks RB = new RepositoryBooks();
+            String ISBN = "226611156";
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book(ISBN, "War and Peace", author);
+            RB.AddBook(book);
+
+            Book book1 = new Book(ISBN, NameBook, new Author(NameAuthor, LastNameAuthor));
+            Should.Throw<ArgumentException>(() => RB.AddBook(book1));
+        }
+
     }
 }
