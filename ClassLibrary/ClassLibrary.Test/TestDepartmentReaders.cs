@@ -64,11 +64,12 @@ namespace ClassLibrary.Test
             DR.BorrowBook(reader,book);
             Reader reader1 = new Reader("Alex", "Tolstoj");
             DR.AddReader(reader1);
-            
 
+            DR.CountBorrowedBooksWithISBN(book.ISBN).ShouldBe(1);
             Should.Throw<ArgumentException>(() => DR.BorrowBook(reader1, book));
         }
 
+        [Test]
         public void BorrowedBookNullArgument()
         {
             DepartmentReaders DR = new DepartmentReaders();
@@ -80,7 +81,6 @@ namespace ClassLibrary.Test
             Should.Throw<ArgumentNullException>(() => DR.BorrowBook(null, book));
             Should.Throw<ArgumentNullException>(() => DR.BorrowBook(reader, null));
         }
-
 
     }
 }

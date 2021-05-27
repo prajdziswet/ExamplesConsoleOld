@@ -22,16 +22,14 @@ namespace ClassLibrary
             private set;
         }
 
-        public List<Book> BorrowedBooks
-        {
-            get;
-            private set;
-        } = new List<Book>();
+        private List<Book> borrowedBooks = new List<Book>();
+        public IReadOnlyList<Book> BorrowedBooks
+        => borrowedBooks.AsReadOnly();
 
-        public static int Count
+        private static int Count
         {
             get;
-            private set;
+            set;
         }
 
         public Reader(String NameReader, String LastNameReader)
@@ -52,12 +50,12 @@ namespace ClassLibrary
             this.LastName = LastNameReader;
         }
 
-        public void AddBookInCard(Book book)
+        internal void AddBookInCard(Book book)
         {
-            if (book == null)
-            {
-                throw new ArgumentNullException("Book's reference is Null (received in AddBookInCardReader)");
-            }
+            //if (book == null)
+            //{
+            //    throw new ArgumentNullException("Book's reference is Null (received in AddBookInCardReader)");
+            //}
 
             var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
             if (findBook != null)
@@ -66,9 +64,12 @@ namespace ClassLibrary
             }
             else
             {
-                BorrowedBooks.Add(book);
+                borrowedBooks.Add(book);
             }
 
         }
+
+        public String ArgumentsToString()
+        => $"{LastName} {Name}";
     }
 }

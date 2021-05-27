@@ -113,13 +113,14 @@ namespace ClassLibrary.Test
             reader.ID.ShouldNotBe(reader1.ID);
         }
 
-        [Test]
-        public void AddNullBookInCard()
-        {
-            Reader reader = new Reader("Lev", "Tolstoj");
+        //I thiks it maybe delete, because this check in borowedbook in DepartmentReader
+        //[Test]
+        //public void AddNullBookInCard()
+        //{
+        //    Reader reader = new Reader("Lev", "Tolstoj");
 
-            Should.Throw<ArgumentNullException>(() =>reader.AddBookInCard(null) );
-        }
+        //    Should.Throw<ArgumentNullException>(() =>reader.AddBookInCard(null) );
+        //}
 
         [Test]
         public void AddBookInCard()
@@ -127,7 +128,10 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Lev", "Tolstoj");
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
-            reader.AddBookInCard(book);
+            DepartmentReaders DR = new DepartmentReaders();
+            DR.AddReader(reader);
+            DR.BorrowBook(reader, book);
+            //reader.AddBookInCard(book);
 
             reader.BorrowedBooks.Count.ShouldBe(1);
             reader.BorrowedBooks[0].ShouldBe(book);
@@ -139,9 +143,12 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Lev", "Tolstoj");
             Author author = new Author("Lev", "Tolstoj");
             Book book = new Book("226611156", "War and Peace", author);
-            reader.AddBookInCard(book);
+            DepartmentReaders DR = new DepartmentReaders();
+            DR.AddReader(reader);
+            DR.BorrowBook(reader, book);
+            //reader.AddBookInCard(book);
 
-            Should.Throw<ArgumentException>(() => reader.AddBookInCard(book));
+            Should.Throw<ArgumentException>(() => DR.BorrowBook(reader, book));
         }
     }
 }

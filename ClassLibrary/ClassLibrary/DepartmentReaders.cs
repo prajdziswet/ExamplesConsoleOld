@@ -10,8 +10,7 @@ namespace ClassLibrary
         {
             get;
             set;
-        }
-            = new List<Reader>();
+        }  = new List<Reader>();
 
 
         public void AddReader(Reader reader)
@@ -40,12 +39,25 @@ namespace ClassLibrary
 
         public bool CheckBorrowedBook(Book book)
         {
+            if (book == null)
+            {
+                throw new ArgumentNullException("Null Argument \"book\" in AddBook");
+            }
             Book borrowedBook = Readers.SelectMany(x => x.BorrowedBooks).FirstOrDefault(x=>x==book);
             return borrowedBook != null;
         }
 
+        public int CountBorrowedBooksWithISBN(String ISBN)
+        {
+            return Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)).Count();
+        }
+
         public bool CheckReader(Reader reader)
         {
+            if (reader == null)
+            {
+                throw new ArgumentNullException("Null Argument \"reader\" in AddBook");
+            }
             return GetReader(reader.ID)!=null;
         }
 
