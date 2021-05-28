@@ -52,11 +52,6 @@ namespace ClassLibrary
 
         internal void AddBookInCard(Book book)
         {
-            //if (book == null)
-            //{
-            //    throw new ArgumentNullException("Book's reference is Null (received in AddBookInCardReader)");
-            //}
-
             var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
             if (findBook != null)
             {

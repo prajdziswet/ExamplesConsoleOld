@@ -27,10 +27,6 @@ namespace ClassLibrary
             {
                 throw new ArgumentException($"Not Exist {reader.ArgumentsToString()} in DepartmentReaders");
             }
-            if (departmentReaders.CheckBorrowedBook(book))
-            {
-                throw new ArgumentException($"Other reader already borrowed this book ID={book.ID}");
-            }
 
             if (repositoryBooks.GetBook(book.ID)==null)
             {
@@ -45,5 +41,45 @@ namespace ClassLibrary
             departmentReaders.BorrowBook(reader, book);
         }
 
+        public void ReaderBoroweBook(int IDReader, String NameBook)
+        {
+            if (departmentReaders.GetReader(IDReader)==null)
+            {
+                throw new ArgumentException($"Not Exist Reader with (ID={IDReader}) in DepartmentReaders");
+            }
+
+            if (NameBook.IsNullOrWhiteSpace())
+            {
+                throw new ArgumentNullException($"Not set Namebook");
+            }
+
+            var listAllBookWithName = repositoryBooks.FindBooks(NameBook);
+          
+            if (listAllBookWithName.Count == 0)
+            {
+                    throw new ArgumentException($"This book ({NameBook}) not exist in RepositoryBooks");
+            }
+
+           String ISBN = listAllBookWithName[0].ISBN;
+
+           HashSet<Book> allBookWithISBN= new HashSet<Book>(listAllBookWithName);
+
+           HashSet<Book> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
+
+            //Free Book
+            allBookWithISBN.ExceptWith(borrowedBookWithISBN);
+
+            if (allBookWithISBN.Count==0)
+            {
+                throw new ArgumentException("ALL books borrowed");
+            }
+
+            Book freeBook = allBookWithISBN.First();
+
+            departmentReaders.BorrowBook(departmentReaders.GetReader(IDReader),
+                                                freeBook);
+
+
+        }
     }
 }

@@ -113,15 +113,6 @@ namespace ClassLibrary.Test
             reader.ID.ShouldNotBe(reader1.ID);
         }
 
-        //I thiks it maybe delete, because this check in borowedbook in DepartmentReader
-        //[Test]
-        //public void AddNullBookInCard()
-        //{
-        //    Reader reader = new Reader("Lev", "Tolstoj");
-
-        //    Should.Throw<ArgumentNullException>(() =>reader.AddBookInCard(null) );
-        //}
-
         [Test]
         public void AddBookInCard()
         {
