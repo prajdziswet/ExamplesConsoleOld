@@ -45,14 +45,7 @@ namespace ClassLibrary
 
         public int CountBorrowedBooksWithISBN(String ISBN)
         {
-            return CountBorrowedBooksWithISBN(
-                    BorrowedBooksWithISBN(ISBN)
-                    );
-        }
-
-        private int CountBorrowedBooksWithISBN(HashSet<Book> temp)
-        {
-            return temp.Count;
+            return BorrowedBooksWithISBN(ISBN).Count;
         }
 
         public HashSet<Book> BorrowedBooksWithISBN(String ISBN)

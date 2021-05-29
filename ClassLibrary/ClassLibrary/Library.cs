@@ -21,25 +21,6 @@ namespace ClassLibrary
 
         public Reader GetReader(int IDReader) => departmentReaders.GetReader(IDReader);
 
-        public void ReaderBoroweBook(Reader reader,Book book)
-        {
-            if (!departmentReaders.CheckReader(reader))
-            {
-                throw new ArgumentException($"Not Exist {reader.ArgumentsToString()} in DepartmentReaders");
-            }
-
-            if (repositoryBooks.GetBook(book.ID)==null)
-            {
-                throw new ArgumentException($"This book not exist {book.ArgumentsToString()} in RepositoryBooks");
-            }
-            if (repositoryBooks.CountBookWithISBN(book.ISBN)==departmentReaders.CountBorrowedBooksWithISBN(book.ISBN))
-            {
-                throw new ArgumentException($"ALL books with {book.ISBN} borrowed");
-            }
-
-
-            departmentReaders.BorrowBook(reader, book);
-        }
 
         public void ReaderBoroweBook(int IDReader, String NameBook)
         {
@@ -50,7 +31,7 @@ namespace ClassLibrary
 
             if (NameBook.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException($"Not set Namebook");
+                throw new ArgumentNullException("Not set Namebook");
             }
 
             var listAllBookWithName = repositoryBooks.FindBooks(NameBook);
