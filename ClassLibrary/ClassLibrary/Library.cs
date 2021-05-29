@@ -31,7 +31,7 @@ namespace ClassLibrary
 
             if (NameBook.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("Not set Namebook");
+                throw new ArgumentNullException("","Not set Namebook");
             }
 
             var listAllBookWithName = repositoryBooks.FindBooks(NameBook);

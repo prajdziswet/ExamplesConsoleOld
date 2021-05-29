@@ -53,15 +53,6 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Ivan", "Ivanov");
             lib.AddReader(reader);
 
-            try
-            {
-                lib.ReaderBoroweBook(reader.ID, "");
-            }
-            catch (Exception e)
-            {
-                string x=e.Message;
-            }
-
             Should.Throw<ArgumentNullException>(() => lib.ReaderBoroweBook(reader.ID, "")).Message.ShouldBe("Not set Namebook");
         }
 
