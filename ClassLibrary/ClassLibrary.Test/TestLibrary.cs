@@ -53,7 +53,7 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Ivan", "Ivanov");
             lib.AddReader(reader);
 
-            Should.Throw<ArgumentNullException>(() => lib.ReaderBoroweBook(reader.ID, "")).Message.ShouldBe("Not set Namebook");
+            Should.Throw<ArgumentNullException>(() => lib.ReaderBoroweBook(reader.ID, "")).ParamName.ShouldBe("NameBook");
         }
 
         [Test]
@@ -93,6 +93,26 @@ namespace ClassLibrary.Test
             lib.ReaderBoroweBook(reader2.ID, book2.NameBook);
 
             Should.Throw<ArgumentException>(() => lib.ReaderBoroweBook(reader3.ID, book1.NameBook)).Message.ShouldBe("ALL books borrowed");
+        }
+
+        [Test]
+        public void BookBorrowedTwince()
+        {
+            Library lib = new Library();
+            //Add Book
+            Author author = new Author("Lev", "Tolstoj");
+            Book book1 = new Book("226611156", "War and Peace", author);
+            lib.AddBookInLibrary(book1);
+            Book book2 = new Book("226611156", "War and Peace", author);
+            lib.AddBookInLibrary(book2);
+            //Add reader
+            Reader reader1 = new Reader("Ivan", "Ivanov");
+            lib.AddReader(reader1);
+
+            //Borrow Books
+            lib.ReaderBoroweBook(reader1.ID, book1.NameBook);
+
+            Should.Throw<ArgumentException>(() => lib.ReaderBoroweBook(reader1.ID, book2.NameBook)).Message.ShouldBe("you have already taken simular book");
         }
     }
 }

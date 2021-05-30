@@ -31,7 +31,7 @@ namespace ClassLibrary
 
             if (NameBook.IsNullOrWhiteSpace())
             {
-                throw new ArgumentNullException("","Not set Namebook");
+                throw new ArgumentNullException(nameof(NameBook));
             }
 
             var listAllBookWithName = repositoryBooks.FindBooks(NameBook);
@@ -43,7 +43,7 @@ namespace ClassLibrary
 
            String ISBN = listAllBookWithName[0].ISBN;
 
-           HashSet<Book> allBookWithISBN= new HashSet<Book>(listAllBookWithName);
+            HashSet<Book> allBookWithISBN= new HashSet<Book>(listAllBookWithName);
 
            HashSet<Book> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
 

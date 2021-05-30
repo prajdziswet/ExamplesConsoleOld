@@ -55,7 +55,7 @@ namespace ClassLibrary
             var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
             if (findBook != null)
             {
-                throw new ArgumentException("you have already taken this book");
+                throw new ArgumentException("you have already taken simular book");
             }
             else
             {
