@@ -65,6 +65,9 @@ namespace ClassLibrary
             return request.ToList();
         }
 
+        public int CountBookWithISBN(String ISBN)
+            => Books.Where(book => book.ISBN == ISBN).Count();
+
         public Book GetBook(int ID)
         {
             return Books.FirstOrDefault(book => book.ID == ID);

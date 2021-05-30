@@ -10,8 +10,7 @@ namespace ClassLibrary
         {
             get;
             set;
-        }
-            = new List<Reader>();
+        }  = new List<Reader>();
 
 
         public void AddReader(Reader reader)
@@ -38,14 +37,28 @@ namespace ClassLibrary
             return Readers.FirstOrDefault(x => x.ID == IDReader);
         }
 
-        public bool CheckBorrowedBook(Book book)
+        public bool CheckBorrowedBook(int IDBook)
         {
-            Book borrowedBook = Readers.SelectMany(x => x.BorrowedBooks).FirstOrDefault(x=>x==book);
+            Book borrowedBook = Readers.SelectMany(x => x.BorrowedBooks).FirstOrDefault(x=>x.ID==IDBook);
             return borrowedBook != null;
+        }
+
+        public int CountBorrowedBooksWithISBN(String ISBN)
+        {
+            return BorrowedBooksWithISBN(ISBN).Count;
+        }
+
+        public HashSet<Book> BorrowedBooksWithISBN(String ISBN)
+        {
+            return new HashSet<Book>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
         }
 
         public bool CheckReader(Reader reader)
         {
+            if (reader == null)
+            {
+                throw new ArgumentNullException("Null Argument \"reader\" in AddBook");
+            }
             return GetReader(reader.ID)!=null;
         }
 
@@ -61,7 +74,7 @@ namespace ClassLibrary
                 throw new ArgumentException("This reader not Exist in DataBase");
             }
 
-            if (CheckBorrowedBook(book))
+            if (CheckBorrowedBook(book.ID))
             {
                 throw new ArgumentException($"This book with ISBN={book.ISBN} borrowed");
             }
