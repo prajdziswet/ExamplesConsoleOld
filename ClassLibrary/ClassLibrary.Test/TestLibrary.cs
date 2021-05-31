@@ -92,7 +92,7 @@ namespace ClassLibrary.Test
             lib.ReaderBoroweBook(reader1.ID, book1.NameBook);
             lib.ReaderBoroweBook(reader2.ID, book2.NameBook);
 
-            Should.Throw<ArgumentException>(() => lib.ReaderBoroweBook(reader3.ID, book1.NameBook)).Message.ShouldBe("ALL books borrowed");
+            Should.Throw<ArgumentException>(() => lib.ReaderBoroweBook(reader3.ID, book1.NameBook));
         }
 
         [Test]

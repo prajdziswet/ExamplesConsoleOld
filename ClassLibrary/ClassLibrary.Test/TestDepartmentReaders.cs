@@ -82,5 +82,13 @@ namespace ClassLibrary.Test
             Should.Throw<ArgumentNullException>(() => DR.BorrowBook(reader, null));
         }
 
+        [Test]
+        public void NotList_GetTimeWhenFreeBook()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            //I think it doesn't matter which parameter returns. What do you think? 
+            Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(null));
+            Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(new System.Collections.Generic.HashSet<BorrowedBook>()));
+        }
     }
 }

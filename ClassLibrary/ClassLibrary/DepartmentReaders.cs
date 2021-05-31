@@ -48,9 +48,20 @@ namespace ClassLibrary
             return BorrowedBooksWithISBN(ISBN).Count;
         }
 
-        public HashSet<Book> BorrowedBooksWithISBN(String ISBN)
+        public HashSet<BorrowedBook> BorrowedBooksWithISBN(String ISBN)
         {
-            return new HashSet<Book>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
+            return new HashSet<BorrowedBook>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
+        }
+
+        public TimeSpan GetTimeWhenFreeBook(HashSet<BorrowedBook> borrowedBooksISBN)
+        {
+            if (borrowedBooksISBN==null||borrowedBooksISBN.Count==0)
+            {
+                throw new ArgumentNullException(nameof(borrowedBooksISBN), "In DepartmentReaders.GetTimeWhenFreeBook");
+            }
+            DateTime timeNow = DateTime.Now;
+            BorrowedBook moreBestFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30);
+            return moreBestFreeBook.dateTime- timeNow;
         }
 
         public bool CheckReader(Reader reader)

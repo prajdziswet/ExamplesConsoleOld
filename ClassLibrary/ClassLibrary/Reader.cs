@@ -22,8 +22,9 @@ namespace ClassLibrary
             private set;
         }
 
-        private List<Book> borrowedBooks = new List<Book>();
-        public IReadOnlyList<Book> BorrowedBooks
+        private List<BorrowedBook> borrowedBooks = new List<BorrowedBook>();
+
+        public IReadOnlyList<BorrowedBook> BorrowedBooks
         => borrowedBooks.AsReadOnly();
 
         private static int Count
@@ -59,7 +60,7 @@ namespace ClassLibrary
             }
             else
             {
-                borrowedBooks.Add(book);
+                borrowedBooks.Add((BorrowedBook)book);
             }
 
         }
