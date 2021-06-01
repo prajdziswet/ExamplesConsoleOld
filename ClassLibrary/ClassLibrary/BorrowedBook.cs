@@ -2,14 +2,28 @@
 
 namespace ClassLibrary
 {
-    public class BorrowedBook: Book
+    public class BorrowedBook
     {
-        private DateTime _dateTime=DateTime.Now;
+        public Book book
+        {
+            get;
+            private set;
+        }
+
+        private DateTime _dateTime;
         public DateTime dateTime
         {
             get => _dateTime;
         }
-        public BorrowedBook(String ISBN, String NameBook, Author AuthorBook):base(ISBN, NameBook, AuthorBook)
-        {}
+        public BorrowedBook(Book book, DateTime _dateTime)
+        {
+            this.book = book;
+            this._dateTime = _dateTime;
+        }
+
+        public static explicit operator Book(BorrowedBook borrowedBook)
+        {
+            return borrowedBook.book;
+        }
     }
 }

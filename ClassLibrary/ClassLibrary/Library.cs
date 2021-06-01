@@ -43,20 +43,18 @@ namespace ClassLibrary
 
            String ISBN = listAllBookWithName[0].ISBN;
 
-           HashSet<Book> allBookWithISBN= new HashSet<Book>(listAllBookWithName);
-
-           HashSet<BorrowedBook> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
+           List<BorrowedBook> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
 
             //Free Book
-            allBookWithISBN.ExceptWith(borrowedBookWithISBN);
+            List<Book> freebooks = listAllBookWithName.FreeBook(borrowedBookWithISBN);
 
-            if (allBookWithISBN.Count==0)
+            if (freebooks.Count==0)
             {
                 TimeSpan days=departmentReaders.GetTimeWhenFreeBook(borrowedBookWithISBN);
                 throw new ArgumentException($"ALL books borrowed. {days.Days} days when the nearest book is free ");
             }
 
-            Book freeBook = allBookWithISBN.First();
+            Book freeBook = freebooks.First();
 
             departmentReaders.BorrowBook(departmentReaders.GetReader(IDReader),
                                                 freeBook);

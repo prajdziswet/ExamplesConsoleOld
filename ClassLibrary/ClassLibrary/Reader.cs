@@ -53,14 +53,21 @@ namespace ClassLibrary
 
         internal void AddBookInCard(Book book)
         {
-            var findBook = BorrowedBooks.FirstOrDefault(x => x.ISBN==book.ISBN);
+            var findBook = BorrowedBooks.FirstOrDefault(x => x.book.ISBN==book.ISBN);
             if (findBook != null)
             {
                 throw new ArgumentException("you have already taken simular book");
             }
             else
             {
-                borrowedBooks.Add((BorrowedBook)book);
+                try
+                {
+                borrowedBooks.Add((BorrowedBook)book); 
+                }
+                catch (InvalidCastException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
 
         }

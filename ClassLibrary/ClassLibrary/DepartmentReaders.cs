@@ -39,7 +39,7 @@ namespace ClassLibrary
 
         public bool CheckBorrowedBook(int IDBook)
         {
-            Book borrowedBook = Readers.SelectMany(x => x.BorrowedBooks).FirstOrDefault(x=>x.ID==IDBook);
+            BorrowedBook borrowedBook = Readers.SelectMany(x => x.BorrowedBooks)?.FirstOrDefault(x=>x?.book.ID==IDBook);
             return borrowedBook != null;
         }
 
@@ -48,12 +48,12 @@ namespace ClassLibrary
             return BorrowedBooksWithISBN(ISBN).Count;
         }
 
-        public HashSet<BorrowedBook> BorrowedBooksWithISBN(String ISBN)
+        public List<BorrowedBook> BorrowedBooksWithISBN(String ISBN)
         {
-            return new HashSet<BorrowedBook>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
+            return Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.book.ISBN == ISBN)).ToList();
         }
 
-        public TimeSpan GetTimeWhenFreeBook(HashSet<BorrowedBook> borrowedBooksISBN)
+        public TimeSpan GetTimeWhenFreeBook(List<BorrowedBook> borrowedBooksISBN)
         {
             if (borrowedBooksISBN==null||borrowedBooksISBN.Count==0)
             {

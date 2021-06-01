@@ -122,10 +122,9 @@ namespace ClassLibrary.Test
             DepartmentReaders DR = new DepartmentReaders();
             DR.AddReader(reader);
             DR.BorrowBook(reader, book);
-            //reader.AddBookInCard(book);
 
             reader.BorrowedBooks.Count.ShouldBe(1);
-            reader.BorrowedBooks[0].ShouldBe(book);
+            ((Book)reader.BorrowedBooks[0]).ShouldBe(book);
         }
 
         [Test]
