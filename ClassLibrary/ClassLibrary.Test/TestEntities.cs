@@ -124,7 +124,7 @@ namespace ClassLibrary.Test
             DR.BorrowBook(reader, book);
 
             reader.BorrowedBooks.Count.ShouldBe(1);
-            ((Book)reader.BorrowedBooks[0]).ShouldBe(book);
+            reader.BorrowedBooks[0].book.ShouldBe(book);
         }
 
         [Test]

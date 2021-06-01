@@ -50,9 +50,5 @@ namespace ClassLibrary
             return $"Book \"{ISBN}\" - \"{NameBook}\" - \"{AuthorBook.ArgumentsToString()}\" ";
         }
 
-        public static explicit operator BorrowedBook(Book book)
-        {
-            return new BorrowedBook(book, DateTime.Now);
-        }
     }
 }

@@ -21,9 +21,5 @@ namespace ClassLibrary
             this._dateTime = _dateTime;
         }
 
-        public static explicit operator Book(BorrowedBook borrowedBook)
-        {
-            return borrowedBook.book;
-        }
     }
 }

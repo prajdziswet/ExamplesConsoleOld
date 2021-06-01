@@ -62,7 +62,7 @@ namespace ClassLibrary
             {
                 try
                 {
-                borrowedBooks.Add((BorrowedBook)book); 
+                borrowedBooks.Add(new BorrowedBook(book,DateTime.Now)); 
                 }
                 catch (InvalidCastException e)
                 {

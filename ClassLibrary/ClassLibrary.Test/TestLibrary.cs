@@ -25,7 +25,7 @@ namespace ClassLibrary.Test
             lib.ReaderBoroweBook(reader.ID, book.NameBook);
 
             lib.GetReader(reader.ID).BorrowedBooks.Count.ShouldBe(1);
-            ((Book)lib.GetReader(reader.ID).BorrowedBooks[0]).ShouldBe(book);
+            lib.GetReader(reader.ID).BorrowedBooks[0].book.ShouldBe(book);
         }
 
         [Test]
