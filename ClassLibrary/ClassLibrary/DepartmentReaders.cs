@@ -48,12 +48,12 @@ namespace ClassLibrary
             return BorrowedBooksWithISBN(ISBN).Count;
         }
 
-        public HashSet<BorrowedBook> BorrowedBooksWithISBN(String ISBN)
+        public List<BorrowedBook> BorrowedBooksWithISBN(String ISBN)
         {
-            return new HashSet<BorrowedBook>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
+            return new List<BorrowedBook>(Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.ISBN == ISBN)));
         }
 
-        public TimeSpan GetTimeWhenFreeBook(HashSet<BorrowedBook> borrowedBooksISBN)
+        public TimeSpan GetTimeWhenFreeBook(List<BorrowedBook> borrowedBooksISBN)
         {
             if (borrowedBooksISBN==null||borrowedBooksISBN.Count==0)
             {

@@ -60,7 +60,7 @@ namespace ClassLibrary
             }
             else
             {
-                borrowedBooks.Add((BorrowedBook)book);
+                borrowedBooks.Add(new BorrowedBook(book));
             }
 
         }

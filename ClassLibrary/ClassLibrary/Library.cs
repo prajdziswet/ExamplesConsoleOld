@@ -34,7 +34,7 @@ namespace ClassLibrary
                 throw new ArgumentNullException(nameof(NameBook));
             }
 
-            var listAllBookWithName = repositoryBooks.FindBooks(NameBook);
+            List<Book> listAllBookWithName = repositoryBooks.FindBooks(NameBook);
           
             if (listAllBookWithName.Count == 0)
             {
@@ -43,20 +43,18 @@ namespace ClassLibrary
 
            String ISBN = listAllBookWithName[0].ISBN;
 
-           HashSet<Book> allBookWithISBN= new HashSet<Book>(listAllBookWithName);
-
-           HashSet<BorrowedBook> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
+           List<BorrowedBook> borrowedBookWithISBN = departmentReaders.BorrowedBooksWithISBN(ISBN);
 
             //Free Book
-            allBookWithISBN.ExceptWith(borrowedBookWithISBN);
+            List<Book> freeBooks= listAllBookWithName.FreeBook(borrowedBookWithISBN);
 
-            if (allBookWithISBN.Count==0)
+            if (freeBooks.Count==0)
             {
                 TimeSpan days=departmentReaders.GetTimeWhenFreeBook(borrowedBookWithISBN);
                 throw new ArgumentException($"ALL books borrowed. {days.Days} days when the nearest book is free ");
             }
 
-            Book freeBook = allBookWithISBN.First();
+            Book freeBook = freeBooks.First();
 
             departmentReaders.BorrowBook(departmentReaders.GetReader(IDReader),
                                                 freeBook);

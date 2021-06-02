@@ -125,7 +125,10 @@ namespace ClassLibrary.Test
             //reader.AddBookInCard(book);
 
             reader.BorrowedBooks.Count.ShouldBe(1);
-            reader.BorrowedBooks[0].ShouldBe(book);
+            reader.BorrowedBooks[0].ID.ShouldBe(book.ID);
+            reader.BorrowedBooks[0].NameBook.ShouldBe(book.NameBook);
+            reader.BorrowedBooks[0].ISBN.ShouldBe(book.ISBN);
+            reader.BorrowedBooks[0].AuthorBook.ShouldBe(book.AuthorBook);
         }
 
         [Test]
