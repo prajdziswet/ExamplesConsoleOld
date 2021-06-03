@@ -140,5 +140,33 @@ namespace ClassLibrary.Test
 
             Should.Throw<ArgumentException>(() => DR.BorrowBook(reader, book));
         }
+
+        [Test]
+        public void DeleteBookInCard()
+        {
+            Reader reader = new Reader("Lev", "Tolstoj");
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            DepartmentReaders DR = new DepartmentReaders();
+            DR.AddReader(reader);
+            DR.BorrowBook(reader, book);
+            DR.ReturnBook(reader, book);
+
+            reader.BorrowedBooks.Count.ShouldBe(0);
+        }
+
+        [Test]
+        public void DeleteNotExistBookInCard()
+        {
+            Reader reader = new Reader("Lev", "Tolstoj");
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Book book1 = new Book("226611156", "War and Peace", author);
+            DepartmentReaders DR = new DepartmentReaders();
+            DR.AddReader(reader);
+            DR.BorrowBook(reader, book);
+
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader, book1)).Message.ShouldBe("you didn't take this book");
+        }
     }
 }

@@ -60,16 +60,23 @@ namespace ClassLibrary
             }
             else
             {
-                try
-                {
                 borrowedBooks.Add(new BorrowedBook(book,DateTime.Now)); 
-                }
-                catch (InvalidCastException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
             }
 
+        }
+
+        internal void DeleteBookInCard(Book book)
+        {
+            var findBook= BorrowedBooks.FirstOrDefault(x => x.book.ID== book.ID);
+
+            if (findBook == null)
+            {
+                throw new ArgumentException("you didn't take this book");
+            }
+            else
+            {
+                borrowedBooks.Remove(findBook);
+            }
         }
 
         public String ArgumentsToString()

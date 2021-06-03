@@ -90,5 +90,29 @@ namespace ClassLibrary.Test
             Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(null));
             Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(new System.Collections.Generic.List<BorrowedBook>()));
         }
+
+        [Test]
+        public void ReturnBookNullArgument()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+
+            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(null, book));
+            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(reader, null));
+        }
+
+        [Test]
+        public void ReturnBookNotExistReader()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Reader reader = new Reader("Lev", "Tolstoj");
+
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader, book)).Message.ShouldBe("This reader not Exist in DataBase");
+        }
     }
 }

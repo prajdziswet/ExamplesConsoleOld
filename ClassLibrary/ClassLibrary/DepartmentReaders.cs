@@ -92,5 +92,20 @@ namespace ClassLibrary
 
             reader.AddBookInCard(book);
         }
+
+        public void ReturnBook(Reader reader, Book book)
+        {
+            if (reader == null || book == null)
+            {
+                throw new ArgumentNullException($"Null Argument {((reader == null) ? "reader" : "book")} in AddBook");
+            }
+
+            if (!CheckReader(reader))
+            {
+                throw new ArgumentException("This reader not Exist in DataBase");
+            }
+
+            reader.DeleteBookInCard(book);
+        }
     }
 }
