@@ -93,19 +93,35 @@ namespace ClassLibrary
             reader.AddBookInCard(book);
         }
 
-        public void ReturnBook(Reader reader, Book book)
+        public void ReturnBook(int IDReader, String NameBook)
         {
-            if (reader == null || book == null)
+            Reader reader = GetReader(IDReader);
+            if (reader == null)
             {
-                throw new ArgumentNullException($"Null Argument {((reader == null) ? "reader" : "book")} in AddBook");
+                throw new ArgumentException($"Not Exist Reader with (ID={IDReader}) in DepartmentReaders");
             }
 
-            if (!CheckReader(reader))
+            if (NameBook.IsNullOrWhiteSpace())
             {
-                throw new ArgumentException("This reader not Exist in DataBase");
+                throw new ArgumentNullException(nameof(NameBook));
             }
 
-            reader.DeleteBookInCard(book);
+            int? ID_Book = GetIDBorrowedBookForReader(IDReader, NameBook);
+
+            if (!ID_Book.HasValue)//?
+            {
+                throw new ArgumentException("you didn't take this book");
+            }
+            else
+            {
+                reader.DeleteBookInCard(ID_Book.Value);
+            }          
         }
+
+        private int? GetIDBorrowedBookForReader(int ID_Readder,String NameBook)
+        {
+            return GetReader(ID_Readder).BorrowedBooks.FirstOrDefault(borrowedBook => borrowedBook.book.NameBook == NameBook)?.book.ID;
+        }
+
     }
 }

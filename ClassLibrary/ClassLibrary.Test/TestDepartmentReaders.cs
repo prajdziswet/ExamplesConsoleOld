@@ -92,7 +92,7 @@ namespace ClassLibrary.Test
         }
 
         [Test]
-        public void ReturnBookNullArgument()
+        public void ReturnNotExistBook()
         {
             DepartmentReaders DR = new DepartmentReaders();
             Author author = new Author("Lev", "Tolstoj");
@@ -100,8 +100,19 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Lev", "Tolstoj");
             DR.AddReader(reader);
 
-            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(null, book));
-            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(reader, null));
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader.ID, "Mu-Mu")).Message.ShouldBe("you didn't take this book");
+        }
+
+        [Test]
+        public void ReturnNotSetBook()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+
+            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(reader.ID, "")).ParamName.ShouldBe("NameBook");
         }
 
         [Test]
@@ -112,7 +123,7 @@ namespace ClassLibrary.Test
             Book book = new Book("226611156", "War and Peace", author);
             Reader reader = new Reader("Lev", "Tolstoj");
 
-            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader, book)).Message.ShouldBe("This reader not Exist in DataBase");
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(-1, book.NameBook)).Message.ShouldBe("Not Exist Reader with (ID=-1) in DepartmentReaders");
         }
     }
 }

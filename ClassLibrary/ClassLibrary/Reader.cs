@@ -65,9 +65,9 @@ namespace ClassLibrary
 
         }
 
-        internal void DeleteBookInCard(Book book)
+        internal void DeleteBookInCard(int ID_Book)
         {
-            var findBook= BorrowedBooks.FirstOrDefault(x => x.book.ID== book.ID);
+            var findBook= BorrowedBooks.FirstOrDefault(x => x.book.ID== ID_Book);
 
             if (findBook == null)
             {

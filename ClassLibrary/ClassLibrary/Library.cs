@@ -58,8 +58,9 @@ namespace ClassLibrary
 
             departmentReaders.BorrowBook(departmentReaders.GetReader(IDReader),
                                                 freeBook);
-
-
         }
+
+        public void ReaderReturnBook(int IDReader, String NameBook) =>
+            departmentReaders.ReturnBook(IDReader, NameBook);
     }
 }
