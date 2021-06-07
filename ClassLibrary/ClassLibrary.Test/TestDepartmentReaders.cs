@@ -86,17 +86,32 @@ namespace ClassLibrary.Test
         public void NotList_GetTimeWhenFreeBook()
         {
             DepartmentReaders DR = new DepartmentReaders();
-            //I think it doesn't matter which parameter returns. What do you think? 
-            Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(null));
-            Should.Throw<ArgumentNullException>(() => DR.GetTimeWhenFreeBook(new System.Collections.Generic.List<BorrowedBook>()));
+            
+            Should.Throw<ArgumentNullException>(() => DR.GetDayWhenFreeBook(null));
+            Should.Throw<ArgumentNullException>(() => DR.GetDayWhenFreeBook(new System.Collections.Generic.List<BorrowedBook>()));
+        }
+
+        [Test]
+        public void List_WhenFreeBook()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Book book1 = new Book("226611156", "War and Peace", author);
+            Library lib = new Library();
+            lib.AddBookInLibrary(book);
+            lib.AddBookInLibrary(book1);
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+            DR.BorrowBook(reader, book);
+
+            DR.GetDayWhenFreeBook(DR.BorrowedBooksWithISBN(book.ISBN)).ShouldNotBe(null);
         }
 
         [Test]
         public void ReturnNotExistBook()
         {
             DepartmentReaders DR = new DepartmentReaders();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
             Reader reader = new Reader("Lev", "Tolstoj");
             DR.AddReader(reader);
 
@@ -107,8 +122,6 @@ namespace ClassLibrary.Test
         public void ReturnNotSetBook()
         {
             DepartmentReaders DR = new DepartmentReaders();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
             Reader reader = new Reader("Lev", "Tolstoj");
             DR.AddReader(reader);
 
@@ -119,11 +132,8 @@ namespace ClassLibrary.Test
         public void ReturnBookNotExistReader()
         {
             DepartmentReaders DR = new DepartmentReaders();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            Reader reader = new Reader("Lev", "Tolstoj");
 
-            Should.Throw<ArgumentException>(() => DR.ReturnBook(-1, book.NameBook)).Message.ShouldBe("Not Exist Reader with (ID=-1) in DepartmentReaders");
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(-1, "Mu-Mu")).Message.ShouldBe("Not Exist Reader with (ID=-1) in DepartmentReaders");
         }
     }
 }

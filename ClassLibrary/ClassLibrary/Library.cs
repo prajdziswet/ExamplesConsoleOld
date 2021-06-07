@@ -50,8 +50,12 @@ namespace ClassLibrary
 
             if (freebooks.Count==0)
             {
-                TimeSpan days=departmentReaders.GetTimeWhenFreeBook(borrowedBookWithISBN);
-                throw new ArgumentException($"ALL books borrowed. {days.Days} days when the nearest book is free ");
+                DateTime? days=departmentReaders.GetDayWhenFreeBook(borrowedBookWithISBN);
+                if (days==null)
+                {
+                    throw new ArgumentException($"ALL books borrowed, and readers are not return book");
+                }
+                throw new ArgumentException($"ALL books borrowed. {days.Value.ToString("dd-MM")} days when the nearest book is free ");
             }
 
             Book freeBook = freebooks.First();

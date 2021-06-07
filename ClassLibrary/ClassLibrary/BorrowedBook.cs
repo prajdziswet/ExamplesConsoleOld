@@ -10,15 +10,15 @@ namespace ClassLibrary
             private set;
         }
 
-        private DateTime _dateTime;
         public DateTime dateTime
         {
-            get => _dateTime;
+            get;
+            private set;
         }
-        public BorrowedBook(Book book, DateTime _dateTime)
+        public BorrowedBook(Book book, DateTime dateTime)
         {
             this.book = book;
-            this._dateTime = _dateTime;
+            this.dateTime = dateTime;
         }
 
     }

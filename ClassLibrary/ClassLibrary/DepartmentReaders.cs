@@ -53,15 +53,16 @@ namespace ClassLibrary
             return Readers.SelectMany(x => x.BorrowedBooks.Where(y => y.book.ISBN == ISBN)).ToList();
         }
 
-        public TimeSpan GetTimeWhenFreeBook(List<BorrowedBook> borrowedBooksISBN)
+        public DateTime? GetDayWhenFreeBook(List<BorrowedBook> borrowedBooksISBN)
         {
             if (borrowedBooksISBN==null||borrowedBooksISBN.Count==0)
             {
                 throw new ArgumentNullException(nameof(borrowedBooksISBN), "In DepartmentReaders.GetTimeWhenFreeBook");
             }
             DateTime timeNow = DateTime.Now;
-            BorrowedBook moreBestFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30);
-            return moreBestFreeBook.dateTime- timeNow;
+            int? dayFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30)?.dateTime.AddDays(30).Day;
+            if (dayFreeBook == null) return null;
+            return DateTime.Now.AddDays(dayFreeBook.Value);
         }
 
         public bool CheckReader(Reader reader)
