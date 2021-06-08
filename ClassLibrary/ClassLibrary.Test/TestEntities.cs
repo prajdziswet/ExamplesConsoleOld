@@ -150,7 +150,7 @@ namespace ClassLibrary.Test
             DepartmentReaders DR = new DepartmentReaders();
             DR.AddReader(reader);
             DR.BorrowBook(reader, book);
-            DR.ReturnBook(reader.ID, book.NameBook);
+            DR.ReturnBook(reader.ID, book.ID);
 
             reader.BorrowedBooks.Count.ShouldBe(0);
         }
@@ -165,7 +165,7 @@ namespace ClassLibrary.Test
             DR.AddReader(reader);
             DR.BorrowBook(reader, book);
 
-            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader.ID, "Mu-Mu")).Message.ShouldBe("you didn't take this book");
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader.ID, book.ID+1)).Message.ShouldBe("you didn't take this book");
         }
     }
 }

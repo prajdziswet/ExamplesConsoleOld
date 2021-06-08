@@ -60,9 +60,9 @@ namespace ClassLibrary
                 throw new ArgumentNullException(nameof(borrowedBooksISBN), "In DepartmentReaders.GetTimeWhenFreeBook");
             }
             DateTime timeNow = DateTime.Now;
-            int? dayFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30)?.dateTime.AddDays(30).Day;
+            DateTime? dayFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30)?.dateTime.AddDays(30);
             if (dayFreeBook == null) return null;
-            return DateTime.Now.AddDays(dayFreeBook.Value);
+            return dayFreeBook;
         }
 
         public bool CheckReader(Reader reader)
@@ -94,34 +94,14 @@ namespace ClassLibrary
             reader.AddBookInCard(book);
         }
 
-        public void ReturnBook(int IDReader, String NameBook)
+        public void ReturnBook(int IDReader, int ID_Book)
         {
             Reader reader = GetReader(IDReader);
             if (reader == null)
             {
                 throw new ArgumentException($"Not Exist Reader with (ID={IDReader}) in DepartmentReaders");
             }
-
-            if (NameBook.IsNullOrWhiteSpace())
-            {
-                throw new ArgumentNullException(nameof(NameBook));
-            }
-
-            int? ID_Book = GetIDBorrowedBookForReader(IDReader, NameBook);
-
-            if (!ID_Book.HasValue)//?
-            {
-                throw new ArgumentException("you didn't take this book");
-            }
-            else
-            {
-                reader.DeleteBookInCard(ID_Book.Value);
-            }          
-        }
-
-        private int? GetIDBorrowedBookForReader(int ID_Readder,String NameBook)
-        {
-            return GetReader(ID_Readder).BorrowedBooks.FirstOrDefault(borrowedBook => borrowedBook.book.NameBook == NameBook)?.book.ID;
+                reader.DeleteBookInCard(ID_Book);        
         }
 
     }

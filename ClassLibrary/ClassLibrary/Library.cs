@@ -64,7 +64,7 @@ namespace ClassLibrary
                                                 freeBook);
         }
 
-        public void ReaderReturnBook(int IDReader, String NameBook) =>
-            departmentReaders.ReturnBook(IDReader, NameBook);
+        public void ReaderReturnBook(int IDReader, int ID_Book) =>
+            departmentReaders.ReturnBook(IDReader, ID_Book);
     }
 }

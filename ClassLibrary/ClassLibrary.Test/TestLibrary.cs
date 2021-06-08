@@ -40,7 +40,7 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Ivan", "Ivanov");
             Should.Throw<ArgumentException>(() => lib.ReaderBoroweBook(reader.ID, book.NameBook)).Message.ShouldBe($"Not Exist Reader with (ID={reader.ID}) in DepartmentReaders");
             //for return book
-            Should.Throw<ArgumentException>(() => lib.ReaderReturnBook(reader.ID, book.NameBook)).Message.ShouldBe($"Not Exist Reader with (ID={reader.ID}) in DepartmentReaders");
+            Should.Throw<ArgumentException>(() => lib.ReaderReturnBook(reader.ID, book.ID)).Message.ShouldBe($"Not Exist Reader with (ID={reader.ID}) in DepartmentReaders");
         }
 
         [Test]
@@ -55,8 +55,6 @@ namespace ClassLibrary.Test
             lib.AddReader(reader);
 
             Should.Throw<ArgumentNullException>(() => lib.ReaderBoroweBook(reader.ID, "")).ParamName.ShouldBe("NameBook");
-            //for return book
-            Should.Throw<ArgumentNullException>(() => lib.ReaderReturnBook(reader.ID, "")).ParamName.ShouldBe("NameBook");
         }
 
         [Test]

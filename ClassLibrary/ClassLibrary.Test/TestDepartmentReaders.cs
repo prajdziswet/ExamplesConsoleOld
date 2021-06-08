@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using Shouldly;
+using System.Collections.Generic;
 
 namespace ClassLibrary.Test
 {
@@ -115,17 +116,7 @@ namespace ClassLibrary.Test
             Reader reader = new Reader("Lev", "Tolstoj");
             DR.AddReader(reader);
 
-            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader.ID, "Mu-Mu")).Message.ShouldBe("you didn't take this book");
-        }
-
-        [Test]
-        public void ReturnNotSetBook()
-        {
-            DepartmentReaders DR = new DepartmentReaders();
-            Reader reader = new Reader("Lev", "Tolstoj");
-            DR.AddReader(reader);
-
-            Should.Throw<ArgumentNullException>(() => DR.ReturnBook(reader.ID, "")).ParamName.ShouldBe("NameBook");
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(reader.ID, 1)).Message.ShouldBe("you didn't take this book");
         }
 
         [Test]
@@ -133,7 +124,36 @@ namespace ClassLibrary.Test
         {
             DepartmentReaders DR = new DepartmentReaders();
 
-            Should.Throw<ArgumentException>(() => DR.ReturnBook(-1, "Mu-Mu")).Message.ShouldBe("Not Exist Reader with (ID=-1) in DepartmentReaders");
+            Should.Throw<ArgumentException>(() => DR.ReturnBook(-1, 1)).Message.ShouldBe("Not Exist Reader with (ID=-1) in DepartmentReaders");
+        }
+
+        [Test]
+        public void BookAvaible30Days()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Reader reader = new Reader("Lev", "Tolstoj");
+            DR.AddReader(reader);
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            Library lib = new Library();
+            lib.AddBookInLibrary(book);
+            DR.BorrowBook(reader, book);
+
+            DateTime DayShouldBe = DateTime.Now.AddDays(30);
+
+            DR.GetDayWhenFreeBook(DR.BorrowedBooksWithISBN(book.ISBN)).Value.Day.ShouldBe(DayShouldBe.Day);
+        }
+
+        public void BookBorrowed30DaysBefore()
+        {
+            DepartmentReaders DR = new DepartmentReaders();
+            Author author = new Author("Lev", "Tolstoj");
+            Book book = new Book("226611156", "War and Peace", author);
+            BorrowedBook borrowedBook = new BorrowedBook(book, DateTime.Now.AddDays(-31));
+            List<BorrowedBook> borrowedBooks = new List<BorrowedBook>();
+            borrowedBooks.Add(borrowedBook);
+
+            DR.GetDayWhenFreeBook(borrowedBooks).HasValue.ShouldBeFalse();
         }
     }
 }
