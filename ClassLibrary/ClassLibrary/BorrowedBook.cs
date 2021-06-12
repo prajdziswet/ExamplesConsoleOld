@@ -14,11 +14,15 @@ namespace ClassLibrary
         {
             get;
             private set;
-        }
-        public BorrowedBook(Book book, DateTime dateTime)
+        } = DateTime.Now;
+
+        public DateTime dateTimeReturn
+    {
+        get => dateTime.AddDays(30);
+    }
+    public BorrowedBook(Book book)
         {
             this.book = book;
-            this.dateTime = dateTime;
         }
 
     }

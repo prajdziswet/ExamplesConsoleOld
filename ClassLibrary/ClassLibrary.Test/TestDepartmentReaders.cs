@@ -143,17 +143,5 @@ namespace ClassLibrary.Test
 
             DR.GetDayWhenFreeBook(DR.BorrowedBooksWithISBN(book.ISBN)).Value.Day.ShouldBe(DayShouldBe.Day);
         }
-
-        public void BookBorrowed30DaysBefore()
-        {
-            DepartmentReaders DR = new DepartmentReaders();
-            Author author = new Author("Lev", "Tolstoj");
-            Book book = new Book("226611156", "War and Peace", author);
-            BorrowedBook borrowedBook = new BorrowedBook(book, DateTime.Now.AddDays(-31));
-            List<BorrowedBook> borrowedBooks = new List<BorrowedBook>();
-            borrowedBooks.Add(borrowedBook);
-
-            DR.GetDayWhenFreeBook(borrowedBooks).HasValue.ShouldBeFalse();
-        }
     }
 }

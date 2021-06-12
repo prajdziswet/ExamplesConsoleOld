@@ -60,9 +60,8 @@ namespace ClassLibrary
                 throw new ArgumentNullException(nameof(borrowedBooksISBN), "In DepartmentReaders.GetTimeWhenFreeBook");
             }
             DateTime timeNow = DateTime.Now;
-            DateTime? dayFreeBook = borrowedBooksISBN.OrderBy(book => book.dateTime).FirstOrDefault(book => (timeNow - book.dateTime).Days < 30)?.dateTime.AddDays(30);
-            if (dayFreeBook == null) return null;
-            return dayFreeBook;
+
+            return borrowedBooksISBN.Where(book => book.dateTimeReturn >= timeNow).Select(book => book.dateTimeReturn).Min();
         }
 
         public bool CheckReader(Reader reader)
